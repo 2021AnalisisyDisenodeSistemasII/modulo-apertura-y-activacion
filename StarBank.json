@@ -1,0 +1,68 @@
+{
+    "starBank": {
+        "users": [
+            {
+                "type": "natural, business",
+                "_userId": "",
+                "passwors": "",
+                "name": "",
+                "ocupation": "",
+                "phone": "",
+                "city": "",
+                "address": "",
+                "accounts": [
+                    {
+                        "type": "corriente, ahorros",
+                        "_accountId": "",
+                        "creationBranch": "",
+                        "creationDate": "",
+                        "status": "on, off",
+                        "money": null,
+                        "operations": [
+                            {
+                                "type": "deposit, retirement, commision, rent(only for ahorros)",
+                                "value": null,
+                                "date": "",
+                                "_branchId": ""
+                            }
+                        ]
+                    }
+                ],
+                "company(only for business)": {
+                    "_nit": "",
+                    "name": "",
+                    "sector": ""
+                }
+            }
+        ],
+        "branches": [
+            {
+                "_branchId": "",
+                "password": "",
+                "name": "",
+                "city": "",
+                "address": "",
+                "account": [
+                    {
+                        "_accountId": "",
+                        "money": null,
+                        "operations": [
+                            {
+                                "type": "deposit, retirement",
+                                "value": null,
+                                "date": "",
+                                "_branchId": ""
+                            }
+                        ]
+                    }
+                ],
+                "cashiers": [
+                    {
+                        "_cashierId": "",
+                        "password": ""
+                    }
+                ]
+            }
+        ]
+    }
+}
