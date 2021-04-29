@@ -5,7 +5,7 @@ const appRouter = (app, fs) => {
 
     // default route
     app.get('/', (req, res) => {
-        res.send('welcome to the mono api-server');
+        res.send('welcome to the ohmono api-server');
     });
 
     // // other routes

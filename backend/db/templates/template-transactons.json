@@ -1,0 +1,7 @@
+{
+    "_tranid(_consignment, _retirement)": {
+        "sucursal": "sucursal remitent",
+        "date": "date of transaction",
+        "value": "$"
+    }
+}
