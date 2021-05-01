@@ -1,0 +1,94 @@
+{
+  "accounts": [
+    {
+      "_id": "1",
+      "type": "Ahorros",
+      "created_at": "08/04/2021",
+      "user_id": "CC 1234567890",
+      "current_money": 50000,
+      "active": true,
+      "ensurance": "A"
+    },
+    {
+      "_id": "2",
+      "type": "Corriente",
+      "created_at": "09/04/2021",
+      "user_id": "CC 31435647",
+      "current_money": 110000,
+      "active": true,
+      "ensurance": "B"
+    },
+    {
+      "_id": "3",
+      "type": "Ahorros",
+      "created_at": "10/04/2021",
+      "user_id": "CC 5432134354",
+      "current_money": 340000,
+      "active": true,
+      "ensurance": "C"
+    },
+    {
+      "_id": "4",
+      "type": "Ahorros",
+      "created_at": "11/04/2021",
+      "user_id": "CC 2134345654",
+      "current_money": 450000,
+      "active": true,
+      "ensurance": ""
+    },
+    {
+      "_id": "5",
+      "type": "Corriente",
+      "created_at": "12/04/2021",
+      "user_id": "CC 98765432",
+      "current_money": 5000000,
+      "active": true,
+      "ensurance": "A"
+    },
+    {
+      "_id": "6",
+      "type": "Ahorros",
+      "created_at": "13/04/2021",
+      "user_id": "CC 65432345",
+      "current_money": 150000,
+      "active": true,
+      "ensurance": "B"
+    },
+    {
+      "_id": "7",
+      "type": "Corriente",
+      "created_at": "14/04/2021",
+      "user_id": "CC 234565",
+      "current_money": 50000,
+      "active": true,
+      "ensurance": "C"
+    },
+    {
+      "_id": "8",
+      "type": "Ahorros",
+      "created_at": "15/04/2021",
+      "user_id": "CC 23453456",
+      "current_money": 60000,
+      "active": true,
+      "ensurance": ""
+    },
+    {
+      "_id": "9",
+      "type": "Corriente",
+      "created_at": "16/04/2021",
+      "user_id": "CC 232435465",
+      "current_money": 980000,
+      "active": true,
+      "ensurance": "A"
+    },
+    {
+      "_id": "10",
+      "type": "Ahorros",
+      "created_at": "17/04/2021",
+      "user_id": "CC 6543223435",
+      "current_money": 120000,
+      "active": true,
+      "ensurance": ""
+    }
+  ]
+}

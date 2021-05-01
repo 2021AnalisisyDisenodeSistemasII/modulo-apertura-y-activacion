@@ -1,0 +1,35 @@
+@use "../mixins.scss" as m;
+@use "../colors.scss";
+
+.welcome-container {
+  background-image: url("../../img/8lnbXtxFGZw.png");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  @include m.flexCenter(column);
+  .welcome-square {
+    @include m.flexCenter(column);
+    justify-content: space-between;
+    backdrop-filter: blur(2px);
+    width: 350px;
+    height: 90%;
+    background-color: colors.$glassy-white;
+    border-radius: 20px;
+    padding: 1rem 3rem;
+    img {
+      width: 90%;
+      height: 55%;
+    }
+    h1 {
+      padding: 1rem;
+    }
+    .welcome-button {
+      @include m.longField(colors.$gradient-dark-green);
+      @include m.flexCenter(column);
+    }
+    .register-button {
+      @include m.longField(colors.$gradient-blue);
+      @include m.flexCenter(column);
+    }
+  }
+}

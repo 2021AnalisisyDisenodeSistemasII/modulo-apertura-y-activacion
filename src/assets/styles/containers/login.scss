@@ -1,0 +1,29 @@
+@use "./welcome";
+@use '../mixins.scss' as m;
+@use "../colors.scss";
+
+.login-container {
+  @extend .welcome-container;
+
+  .login-square {
+    @extend .welcome-square;
+    justify-content: center;
+    input,
+    form {
+      height: 30%;
+      input {
+        @include m.longField(colors.$glassy-white);
+        border: 2px solid colors.$dark-blue;
+        margin: 1rem 0;
+        text-align: left;
+        padding: 0 15px;
+        color: colors.$black;
+        outline: none;
+      }
+    }
+    .login-button {
+      @include m.longField(colors.$gradient-dark-green);
+      margin: 1rem 0;
+    }
+  }
+}
