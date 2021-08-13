@@ -1,0 +1,23 @@
+{
+    "123": {
+	"accounts": [
+            "111"
+	],
+	"phone": "849",
+	"client_name": "vane",
+	"client_occupation": "est",
+	"client_address": "cll"
+    },
+    "52306746": {
+	"accounts": [
+            "bb8469939b7edf5b",
+            "2f9292926738391d",
+            "7fd4174acd5ae1f3",
+            "0520377a9be1c27e"
+	],
+	"phone": "3117050215",
+	"client_name": "Richard Harrison",
+	"client_occupation": "animador",
+	"client_address": "71128 Edwards Harbors Apt. 938 North Carltown, WY 74813"
+    }
+}
