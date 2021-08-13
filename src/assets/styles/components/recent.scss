@@ -1,0 +1,32 @@
+@use '../colors.scss' as c;
+@use '../mixins.scss' as m;
+
+.recent {
+  @include m.flexCenter(row);
+  @include m.longField(c.$gray);
+  justify-content: space-between;
+  color: c.$black;
+  width: 100%;
+  height: auto;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  text-align: left;
+
+  p {
+    font-size: 1rem;
+    color: c.$dark-gray;
+  }
+}
+
+.recent.deposit {
+  border: 3px solid c.$dark-green;
+}
+.recent.withdrawal {
+  border: 3px solid c.$dark-blue;
+}
+.recent.created-account {
+  border: 3px solid c.$ligth-green;
+}
+.recent.activated-account {
+  border: 3px solid c.$dark-blue;
+}

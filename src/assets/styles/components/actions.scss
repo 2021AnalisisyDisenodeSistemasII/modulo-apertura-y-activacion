@@ -1,0 +1,18 @@
+@use '../mixins.scss' as m;
+@use '../colors.scss' as colors;
+
+.actions-container {
+  @include m.flexCenter(column);
+  align-items: flex-start;
+  width: 70%;
+  height: auto;
+  margin-top: 6rem;
+  min-width: 350px;
+  .actions {
+    margin: 1rem 0;
+    @include m.flexCenter(row);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+}

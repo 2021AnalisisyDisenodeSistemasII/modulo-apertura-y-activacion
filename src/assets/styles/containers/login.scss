@@ -10,8 +10,8 @@
     justify-content: center;
     input,
     form {
-      height: 30%;
-      input {
+      margin: 2rem 0;
+      select {
         @include m.longField(colors.$glassy-white);
         border: 2px solid colors.$dark-blue;
         margin: 1rem 0;
@@ -19,6 +19,12 @@
         padding: 0 15px;
         color: colors.$black;
         outline: none;
+      }
+      label {
+        display: block;
+        width: 230px;
+        margin: auto;
+        text-align: left;
       }
     }
     .login-button {

@@ -1,0 +1,13 @@
+@use '../mixins.scss' as m;
+@use '../colors.scss' as c;
+@use '../components/actions.scss';
+
+.recents-container {
+  @extend .actions-container;
+  .recents {
+    @include m.flexCenter(column);
+    margin: 2rem 0;
+    width: 100%;
+    gap: 2rem;
+  }
+}

@@ -1,0 +1,19 @@
+@use '../mixins.scss' as m;
+@use '../colors.scss' as colors;
+@use "./welcome";
+
+.home-container {
+  height: auto;
+  margin-top: 2rem;
+  width: auto;
+  @include m.flexCenter(column);
+  gap: 5rem;
+  justify-content: space-evenly;
+  .top-balls {
+    position: absolute;
+    left: -100px;
+    top: 0px;
+    z-index: -10;
+    width: 500px;
+  }
+}

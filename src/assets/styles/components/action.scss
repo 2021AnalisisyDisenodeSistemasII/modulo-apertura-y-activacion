@@ -1,0 +1,38 @@
+@use '../mixins.scss' as m;
+@use '../colors.scss' as c;
+
+.action {
+  @include m.longField(c.$gradient-dark-green);
+  @include m.flexCenter(column);
+  height: 130px;
+  width: 160px;
+  padding: 1rem;
+  border-radius: 15px;
+  img {
+    width: 30%;
+    height: auto;
+  }
+}
+.action:hover {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+.action:active {
+  cursor: pointer;
+  filter: brightness(0.9);
+}
+
+.deposit {
+  background: c.$gradient-dark-green;
+}
+
+.withdrawal {
+  background: c.$gradient-blue;
+}
+
+.create-account {
+  background: c.$gradient-ligth-green;
+}
+.activate-account {
+  background: c.$gradient-blue;
+}

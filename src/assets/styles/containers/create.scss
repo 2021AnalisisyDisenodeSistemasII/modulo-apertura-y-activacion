@@ -1,0 +1,5 @@
+@use './home.scss';
+
+.create-account--container {
+  @extend .home-container;
+}
