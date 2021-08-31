@@ -21,23 +21,17 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping(path="/nc")
+@RequestMapping(path="/api/client")
 public class NaturalClientController{
 
     private final NaturalClientServices naturalClientServices;
 
     public NaturalClientController(NaturalClientServices naturalClientServices) {
-        //metodoPruebas();
         this.naturalClientServices = naturalClientServices;
-        /*
-        ArrayList array = new ArrayList();
-        array.add("111");
-        addNaturalClient(new NaturalClient("123", array, "849","vane", "est", "cll"));
-*/
     }
 
-    @PostMapping(path="/addc")
-    public boolean addNaturalClient(NaturalClient client){
+    @PostMapping(path="naturalClient/")
+    public boolean addNaturalClient(@RequestBody NaturalClient client){
         try{
             return naturalClientServices.addNaturalClient(client);
         }
@@ -89,10 +83,4 @@ public class NaturalClientController{
     }
 
 
-/*
-    @PostMapping(path = "/post", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String postNaturalClients(@RequestBody NaturalClient naturalClient){
-        return "hola: " + naturalClient.getClient_id();
-    }
-    **/
 }
