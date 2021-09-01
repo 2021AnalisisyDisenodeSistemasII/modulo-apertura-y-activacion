@@ -3,17 +3,18 @@ package opActAcct.starBankbackend.repository.JsonRepository;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import opActAcct.starBankbackend.model.SavingAccount;
-import opActAcct.starBankbackend.repository.IMap;
+import opActAcct.starBankbackend.repository.IClientRepository;
 import opActAcct.starBankbackend.repository.ISavingAccountRepository;
 import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
+import opActAcct.starBankbackend.repository.exception.KeyDoesNotExist;
 
 import java.io.*;
 import java.util.*;
 
-public class SavingAccountJSON implements ISavingAccountRepository, IJson, IMap {
+public class SavingAccountJSON implements ISavingAccountRepository, IJson {
 
-    private String fileName = "saving_accounts.json";
-    private HashMap<String, LinkedTreeMap<String,Object>> accounts= new HashMap<>();
+    private static String fileName = "saving_accounts.json";
+    private static HashMap<String, LinkedTreeMap<String,Object>> accounts= new HashMap<>();
 
     public SavingAccountJSON() {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
@@ -25,44 +26,6 @@ public class SavingAccountJSON implements ISavingAccountRepository, IJson, IMap 
         catch (IOException ex) {
             System.out.println("Problema, mirar error IOE");
         }
-    }
-
-    @Override
-    public String mapToStringInJSONFormat(String key, LinkedTreeMap map) {
-        String stringTransactions = "[\n";
-        ArrayList arrayAccounts = (ArrayList) map.get("transactions");
-        for ( Object s: arrayAccounts) {
-            stringTransactions = stringTransactions.concat( "\t\t\""+ s.toString() +"\",\n");
-        }
-        if(stringTransactions.contains(",")){
-            stringTransactions= stringTransactions.substring(0,stringTransactions.lastIndexOf(','));
-        }
-        stringTransactions = stringTransactions.concat("\n\t]");
-
-        return  "\t\"" + key + "\": {\n" +
-                "\t\t\"isActive\": " + map.get("isActive") + ",\n" +
-                "\t\t\"client_id\": \"" + map.get("client_id") + "\",\n" +
-                "\t\t\"balance\": \"" + map.get("balance") + "\",\n" +
-                "\t\t\"sucursal_id\": \"" + map.get("sucursal_id") + "\",\n" +
-                "\t\t\"transactions\": " + stringTransactions + ",\n" +
-                "\t\t\"creation_date\": \"" + map.get("creation_date") + "\"\n" +
-                "\t}";
-    }
-
-    @Override
-    public LinkedTreeMap objectToMapInJSONFormat(Object object) {
-        SavingAccount account = (SavingAccount) object;
-
-        LinkedTreeMap mapAttributes = new LinkedTreeMap();
-
-        mapAttributes.put("isActive",account.isStatus());
-        mapAttributes.put("client_id", account.getClient_id());
-        mapAttributes.put("balance",account.getBalance());
-        mapAttributes.put("sucursal_id", account.getSucursal_id());
-        mapAttributes.put("transactions", account.getTransactions());
-        mapAttributes.put("creation_date", account.getCreation_date());
-
-        return mapAttributes;
     }
 
     @Override
@@ -102,9 +65,42 @@ public class SavingAccountJSON implements ISavingAccountRepository, IJson, IMap 
     }
 
     @Override
-    public void writeJson(String string) {
+    public void writeJson(Object objectToWrite) throws DuplicateKeyException {
+
+        /* (1)
+         * Se comprueba que el ID no exista.
+         */
+        SavingAccount accountToWrite = (SavingAccount) objectToWrite;
+        accounts= (HashMap) readJson();
+        if(accounts.containsKey( accountToWrite.getAccount_id())){     //Si ingresa es porque el id ya existe
+            throw new DuplicateKeyException(accountToWrite.getAccount_id());
+        }
+
+        /* (2)
+         * Construye el Mapa Organizado con los atributos del objeto.
+         */
+        LinkedTreeMap mapAttributes = new LinkedTreeMap();
+        SavingAccount account = (SavingAccount) objectToWrite;
+        mapAttributes.put("isActive", account.isStatus());
+        mapAttributes.put("client_id", account.getClient_id());
+        mapAttributes.put("balance",account.getBalance());
+        mapAttributes.put("sucursal_id", account.getSucursal_id());
+        mapAttributes.put("transactions", account.getTransactions());
+        mapAttributes.put("creation_date", account.getCreation_date());
+
+        accounts.put(account.getAccount_id(), mapAttributes);
+
+        /* (3)
+         *
+         */
+        Gson gson = new Gson();
+        String stringToWrite = gson.toJson(accounts);
+        System.out.println("string a copiar en el JSON: \n" + stringToWrite + "\n");
+
+
+        //copiar en el archivo
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
-            bw.write(string);
+            bw.write(stringToWrite);
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
@@ -112,57 +108,41 @@ public class SavingAccountJSON implements ISavingAccountRepository, IJson, IMap 
         }
     }
 
+
+    /**
+     * Entradas: Client_id, sucursal_id - Estas entradas son los parámetros de la cuenta que se creará.
+     * Método que construye el objeto Tipo SavingAccount con todos sus atributos.
+     * El método hace un llamado a **writeJson()** y lo copia en el archivo.
+     *
+     * @param client_id
+     * @param sucursal_id
+     * @throws DuplicateKeyException
+     */
     @Override
-    public void addJson(Object object) throws DuplicateKeyException {
-        /**
-         * (1)
-         * Se comprueba que el ID no exista.
+    public void createANewAccount(String client_id, String sucursal_id) throws DuplicateKeyException, KeyDoesNotExist {
+        /* (1)
+         * Verifica que el cliente si exista.
          */
-        SavingAccount account = (SavingAccount) object;
-        accounts= (HashMap) readJson();
-        if(accounts.containsKey( account.getAccount_id())){     //Si ingresa es porque el id ya existe
-            throw new DuplicateKeyException(account.getAccount_id());
+        try{
+            IClientRepository clientRepository = new ClientJSON();
+            Object client = clientRepository.findClient(client_id);
+        }catch (KeyDoesNotExist kne){
+            throw new KeyDoesNotExist(client_id);
         }
 
-        /**
-         * (2)
-         * Agrega al diccionario de los clientes, el nuevo objeto tipo HashMap con los datos del cliente
-         */
-        accounts.put(((SavingAccount) object).getAccount_id(), objectToMapInJSONFormat(object));
-
-        /**
-         * (3)
-         * Se crea el String (de todos los clientes anidados) para poner en el JSON.
-         */
-        String stringAccountHashMapFormat= "{\n";
-        //Se Itera el Diccionario
-        for (Map.Entry<String, LinkedTreeMap<String,Object>> accountLoop : accounts.entrySet()) {
-            //Cada objeto del diccionario se convierte en string. Esto con el método mapToStringInJSONFormat()
-            stringAccountHashMapFormat = stringAccountHashMapFormat.concat(
-                    mapToStringInJSONFormat(accountLoop.getKey() ,accountLoop.getValue()) + ",\n");
-
-        }
-        //Elimina la última coma (,) del string que contiene todos los clientes
-        stringAccountHashMapFormat = stringAccountHashMapFormat.substring(0,
-                stringAccountHashMapFormat.lastIndexOf(','));
-        //Añade el último (}) para el string que contiene todos los clientes
-        stringAccountHashMapFormat = stringAccountHashMapFormat.concat("\n}");
-
-        /**
-         * (4)
-         * Se copia sobre el archivo el string con todos las cuentas en clase JSON.HashMap
-         */
-        writeJson(stringAccountHashMapFormat);
-    }
-
-    @Override
-    public void createANewAccount(String client_id, String sucursal_id) throws DuplicateKeyException {
+        /* (2)
+         * Crea una nueva cuenta de ahorros
+          */
         String account_id = UUID.randomUUID().toString();
         if(accounts.containsKey( account_id )){     //Si ingresa es porque el id ya existe
             throw new DuplicateKeyException(account_id);
         }
         Date fecha = new Date();
         SavingAccount account = new SavingAccount(account_id, client_id, sucursal_id, false, Float.parseFloat("0"), new ArrayList(), fecha.toString());
-        addJson(account);
+
+        // Sobreescribe el Json con todas las cuentas que aloja el Diccionario llamado account
+        writeJson(account);
     }
+
+
 }

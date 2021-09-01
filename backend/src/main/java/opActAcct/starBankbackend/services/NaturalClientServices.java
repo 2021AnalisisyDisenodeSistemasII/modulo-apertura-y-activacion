@@ -1,18 +1,17 @@
 package opActAcct.starBankbackend.services;
 
 import opActAcct.starBankbackend.model.NaturalClient;
-import opActAcct.starBankbackend.repository.INaturalClientRepository;
-import opActAcct.starBankbackend.repository.JsonRepository.NaturalClientJSON;
+import opActAcct.starBankbackend.repository.IClientRepository;
+import opActAcct.starBankbackend.repository.JsonRepository.ClientJSON;
 import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
 import opActAcct.starBankbackend.services.exception.ObjectAlreadyExistsException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class NaturalClientServices {
+public class NaturalClientServices  {
 
-    private INaturalClientRepository naturalClient= new NaturalClientJSON();    //Implementación del cliente JSON
+    private IClientRepository naturalClient= (IClientRepository) new ClientJSON();    //Implementación del cliente JSON
 
     /**
      * @param client
@@ -29,4 +28,6 @@ public class NaturalClientServices {
         }
         return true;
     }
+
+
 }

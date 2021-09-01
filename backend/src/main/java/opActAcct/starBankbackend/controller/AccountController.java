@@ -4,6 +4,7 @@ import lombok.NonNull;
 import opActAcct.starBankbackend.services.CurrentAccountServices;
 import opActAcct.starBankbackend.services.SavingAccountServices;
 import opActAcct.starBankbackend.services.exception.ObjectAlreadyExistsException;
+import opActAcct.starBankbackend.services.exception.ObjectDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,8 @@ public class AccountController {
             savingAccountServices.createANewAccount(client_id, sucursal_id);
         }catch (ObjectAlreadyExistsException oae){
             System.out.println(oae);
+        }catch (ObjectDoesNotExistException one){
+            System.out.println(one);
         }
     }
 
@@ -53,6 +56,8 @@ public class AccountController {
     public void activateASavingAccount(@RequestParam String client_id){
 
     }
+
+
 
 
 }
