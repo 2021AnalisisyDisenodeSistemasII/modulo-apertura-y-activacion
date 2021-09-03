@@ -12,7 +12,7 @@ const Login = () => {
     });
   };
 
-  const [branch, setBranch] = useState("holis branch");
+  const [branch, setBranch] = useState(1);
   const [cashier, setCashier] = useState("cashier 1");
 
   return (
@@ -22,9 +22,9 @@ const Login = () => {
         <form action="" onSubmit={handleClick}>
           <label htmlFor="branch">Branch</label>
           <select name="branch" id="branch" required>
-            <option value="Medellín">Medellín</option>
-            <option value="Barranquilla">Barranquilla</option>
-            <option value="Bogotá">Bogotá</option>
+            <option value="1">Medellín</option>
+            <option value="2">Barranquilla</option>
+            <option value="3">Bogotá</option>
           </select>
           <label htmlFor="cashier">Cashier</label>
           <select name="cashier" id="cashier" required>

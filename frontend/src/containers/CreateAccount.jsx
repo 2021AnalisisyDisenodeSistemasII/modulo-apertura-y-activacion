@@ -6,17 +6,28 @@ import Header from "../components/Header";
 
 const CreateAccount = ({}) => {
   const [userID, setUserID] = useState("");
-  const [accountType, setAccountType] = useState("Corriente");
+  const [accountType, setAccountType] = useState("saving");
   const location = useLocation();
   const branch = location.state.branch;
   const cashier = location.state.cashier;
 
-  const handleCreation = (e) => {
-    e.preventDefault();
-    console.log(userID);
-    console.log(accountType);
-    console.log(branch);
-    console.log(cashier);
+  const handleCreation = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await fetch(
+        `http://localhost:8080/api/account/${accountType}Account/?client_id=${userID}&sucursal_id=${branch}`,
+        {
+          method: "post",
+          headers: new Headers({
+            "Content-Type": "application/json",
+          }),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (e) {
+      console.error("Ha habido un error", e);
+    }
   };
 
   return (
@@ -39,8 +50,8 @@ const CreateAccount = ({}) => {
           id=""
           onClick={(e) => setAccountType(e.currentTarget.value)}
         >
-          <option value="Corriente">Corriente</option>
-          <option value="Ahorros">Ahorros</option>
+          <option value="current">Corriente</option>
+          <option value="saving">Ahorros</option>
         </select>
         <button type="submit">CREAR</button>
       </form>
