@@ -17,10 +17,11 @@ const CreateAccount = ({}) => {
       const response = await fetch(
         `http://localhost:8080/api/account/${accountType}Account/?client_id=${userID}&sucursal_id=${branch}`,
         {
-          method: "post",
+          method: "POST",
           headers: new Headers({
             "Content-Type": "application/json",
           }),
+          body: {},
         }
       );
       const data = await response.json();
