@@ -1,7 +1,7 @@
 package opActAcct.starBankbackend.services;
-import opActAcct.starBankbackend.repository.*;
-import opActAcct.starBankbackend.repository.JsonRepository.*;
-import opActAcct.starBankbackend.repository.exception.KeyDoesNotExist;
+import opActAcct.starBankbackend.repository.repositoryJson.*;
+import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
+import opActAcct.starBankbackend.repository.interfaces.ISavingAccountRepository;
 import opActAcct.starBankbackend.services.exception.ObjectDoesNotExistException;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +15,9 @@ public class SavingAccountServices {
 
     public void createANewAccount(String client_id, String sucursal_id)throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
         try{
-            accountRepository.createANewAccount(client_id, sucursal_id);
+            accountRepository.createNewAccount(client_id, sucursal_id);
         }
-        catch (KeyDoesNotExist kne){
+        catch (KeyDoesNotExistException kne){
             System.out.println(kne);
             throw new ObjectDoesNotExistException(String.format("El cliente no existe" ));
         }

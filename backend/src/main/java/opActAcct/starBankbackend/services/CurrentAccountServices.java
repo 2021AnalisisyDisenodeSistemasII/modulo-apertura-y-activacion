@@ -1,6 +1,8 @@
 package opActAcct.starBankbackend.services;
-import opActAcct.starBankbackend.repository.*;
-import opActAcct.starBankbackend.repository.JsonRepository.*;
+import opActAcct.starBankbackend.repository.repositoryJson.*;
+import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
+import opActAcct.starBankbackend.repository.interfaces.ICurrentAccountRepository;
+import opActAcct.starBankbackend.services.exception.ObjectDoesNotExistException;
 import org.springframework.stereotype.Service;
 
 import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
@@ -11,9 +13,13 @@ public class CurrentAccountServices {
 
     private ICurrentAccountRepository accountRepository = new CurrentAccountJSON();    //Implementación
 
-    public void createANewAccount(String account_id, String client_id, String sucursal_id)throws ObjectAlreadyExistsException{
+    public void createANewAccount(String account_id, String client_id, String sucursal_id)throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
         try{
-            accountRepository.createANewAccount(account_id, client_id, sucursal_id);
+            accountRepository.createNewAccount(account_id, client_id, sucursal_id);
+        }
+        catch (KeyDoesNotExistException kne){
+            System.out.println(kne);
+            throw new ObjectDoesNotExistException(String.format("El cliente no existe" ));
         }
         catch(DuplicateKeyException dke){
             System.out.println(dke);

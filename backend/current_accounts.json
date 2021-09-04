@@ -1,12 +1,1 @@
-{
-	"2324354": {
-		"isActive": false,
-		"client_id": "1040565",
-		"balance": "0.0",
-		"sucursal_id": "67",
-		"transactions": [
-
-	],
-		"creation_date": "Mon Aug 30 19:42:17 COT 2021"
-	}
-}
+{"NIT27":{"isActive":false,"client_id":"35559562-1","balance":0.0,"sucursal_id":"sucursal30","transactions":[],"creation_date":"Fri Sep 03 22:45:41 COT 2021"}}

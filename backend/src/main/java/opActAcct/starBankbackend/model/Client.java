@@ -13,12 +13,12 @@ public abstract class Client {
     protected String client_address;
 
     public Client(String client_id, ArrayList accounts, String phone, String client_name, String client_occupation, String client_address) {
-        this.client_id = client_id;
         this.accounts = accounts;
         this.phone = phone;
         this.client_name = client_name;
         this.client_occupation = client_occupation;
         this.client_address = client_address;
+        this.client_id = client_id;
     }
 
 

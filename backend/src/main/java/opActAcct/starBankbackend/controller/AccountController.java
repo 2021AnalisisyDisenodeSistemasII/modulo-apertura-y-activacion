@@ -38,7 +38,8 @@ public class AccountController {
             savingAccountServices.createANewAccount(client_id, sucursal_id);
         }catch (ObjectAlreadyExistsException oae){
             System.out.println(oae);
-        }catch (ObjectDoesNotExistException one){
+        }
+        catch (ObjectDoesNotExistException one){
             System.out.println(one);
         }
     }
@@ -50,10 +51,13 @@ public class AccountController {
         }catch (ObjectAlreadyExistsException oae){
             System.out.println(oae);
         }
+        catch (ObjectDoesNotExistException one){
+            System.out.println(one);
+        }
     }
 
     @PutMapping(path = "savingAccount/")
-    public void activateASavingAccount(@RequestParam String client_id){
+    public void activateSavingAccount(@RequestParam String client_id){
 
     }
 
