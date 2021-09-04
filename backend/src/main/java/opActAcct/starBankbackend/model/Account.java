@@ -28,6 +28,10 @@ public abstract class Account {
         this.creation_date = creation_date;
     }
 
+    public Account() {
+
+    }
+
 
     public String getAccount_id() {
         return account_id;
