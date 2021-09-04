@@ -8,4 +8,7 @@ public class SavingAccount extends Account{
         super(account_id, client_id, sucursal_id, status, balance, transactions, create_date);
     }
 
+    public SavingAccount() {
+        super();
+    }
 }
