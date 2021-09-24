@@ -1,6 +1,7 @@
 package opActAcct.starBankbackend.repository.repositoryJson;
 
 import com.google.gson.internal.LinkedTreeMap;
+import opActAcct.starBankbackend.model.Account;
 import opActAcct.starBankbackend.model.CurrentAccount;
 import opActAcct.starBankbackend.repository.interfaces.IAccountRepository;
 import opActAcct.starBankbackend.repository.interfaces.IClientRepository;
@@ -29,7 +30,7 @@ public class CurrentAccountJSON extends AccountJSON implements IAccountRepositor
     }
 
     @Override
-    public void createNewAccount(String client_id, String sucursal_id, String account_id) throws DuplicateKeyException, KeyDoesNotExistException {
+    public Account createNewAccount(String client_id, String sucursal_id, String account_id) throws DuplicateKeyException, KeyDoesNotExistException {
         // (1) Verifica que el cliente si exista.
         IClientRepository clientRepository = new CompanyClientJSON();
         try{
@@ -52,6 +53,8 @@ public class CurrentAccountJSON extends AccountJSON implements IAccountRepositor
 
         // (5) Asocia una cuenta al cliente.
         clientRepository.associateAccountToClient(account_id, client_id);
+
+        return account;
 
     }
 

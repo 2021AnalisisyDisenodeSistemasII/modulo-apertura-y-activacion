@@ -121,7 +121,7 @@ public abstract class AccountJSON extends JsonImplementation implements IAccount
     }
 
     @Override
-    public abstract void createNewAccount(
+    public abstract Account  createNewAccount(
             String client_id,
             String sucursal_id,
             String account_id)

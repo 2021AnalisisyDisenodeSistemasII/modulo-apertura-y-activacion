@@ -7,19 +7,23 @@ import opActAcct.starBankbackend.services.SavingAccountServices;
 import opActAcct.starBankbackend.services.exception.ObjectAlreadyExistsException;
 import opActAcct.starBankbackend.services.exception.ObjectDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+
+@RestController
+@RequestMapping(path = "/api/account")
 public class AccountController {
 
     private final SavingAccountServices savingAccountServices;
@@ -43,37 +47,26 @@ public class AccountController {
         return "index";
     }
 
-    @GetMapping(path = "/formSaving")
-    public ModelAndView getFormAccount(){
-        //System.out.println("Hola");
-        return new ModelAndView("formSaving").addObject("account", new SavingAccount());
-    }
-
     @PostMapping(path = "/savingAccount")
-    public String createANewASavingAccount(SavingAccount account, Model model){
-        String client_id = account.getClient_id();
-        String sucursal_id = account.getSucursal_id();
-
+    @ResponseStatus(HttpStatus.CREATED)
+    public SavingAccount createANewASavingAccount(@RequestParam String client_id, @RequestParam String sucursal_id){
+        System.out.println(client_id + sucursal_id);
+        SavingAccount cuenta = new SavingAccount();
         try{
-             savingAccountServices.createANewAccount(client_id, sucursal_id, null);
-             return "exito";
+            cuenta = savingAccountServices.createANewAccount(client_id, sucursal_id, null);
         }catch (ObjectAlreadyExistsException oae){
             System.out.println(oae);
         }
         catch (ObjectDoesNotExistException one){
             System.out.println(one);
         }
-        return "error";
+        System.out.println(cuenta);
+        //return "exito";
+        return cuenta;
     }
 
-    @GetMapping(path = "/formCurrent")
-    public ModelAndView getFormCurrent(){
-        //System.out.println("Hola");
-        return new ModelAndView("formCurrent").addObject("account", new SavingAccount());
-    }
-
-    @PostMapping(path = "/currentAccount")
-    public String createANewACurrentAccount(CurrentAccount account, Model model){
+    /*@PostMapping(path = "/currentAccount")
+    public String createANewACurrentAccount(@RequestParam String id){
         String client_id = account.getClient_id();
         String sucursal_id = account.getSucursal_id();
         String nit = account.getAccount_id();
@@ -87,7 +80,7 @@ public class AccountController {
         }
 
         return "error";
-    }
+    }*/
 
     @PutMapping(path = "savingAccount/")
     public void activateSavingAccount(@RequestParam String client_id){

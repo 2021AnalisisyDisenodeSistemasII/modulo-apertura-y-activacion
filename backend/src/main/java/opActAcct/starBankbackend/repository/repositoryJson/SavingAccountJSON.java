@@ -26,7 +26,7 @@ public class SavingAccountJSON extends AccountJSON  {
      * @throws KeyDoesNotExistException
      */
     @Override
-    public void createNewAccount(
+    public Account createNewAccount(
             String client_id,
             String sucursal_id,
             String account_id_null)
@@ -56,7 +56,7 @@ public class SavingAccountJSON extends AccountJSON  {
 
         // (5) Asocia una cuenta al cliente.
         clientRepository.associateAccountToClient(account_id, client_id);
-
+        return account;
     }
 
 
