@@ -8,8 +8,10 @@ const CreateAccount = ({}) => {
   const [userID, setUserID] = useState("");
   const [accountType, setAccountType] = useState("saving");
   const location = useLocation();
+  const [created, setCreated] = useState(false);
   const branch = location.state.branch;
   const cashier = location.state.cashier;
+  const [accountID, setAccountID] = useState("0");
 
   const handleCreation = async (e) => {
     try {
@@ -26,6 +28,8 @@ const CreateAccount = ({}) => {
       );
       const data = await response.json();
       console.log(data);
+      setAccountID(data.account_id);
+      setCreated(true);
     } catch (e) {
       console.error("Ha habido un error", e);
     }
@@ -43,8 +47,6 @@ const CreateAccount = ({}) => {
           value={userID}
           onChange={(e) => setUserID(e.target.value)}
         />
-        <button>Consultar</button>
-        <div>Info</div>
         <label htmlFor="usrid">Tipo de cuenta a crear</label>
         <select
           name=""
@@ -56,6 +58,11 @@ const CreateAccount = ({}) => {
         </select>
         <button type="submit">CREAR</button>
       </form>
+      {created ? (
+        <h3>La cuenta con ID {accountID} ha sido creada exitosamente</h3>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
