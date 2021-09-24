@@ -9,7 +9,7 @@ const CreateAccount = ({}) => {
   const [nit, setNit] = useState("");
   const [userType, setUserType] = useState("natural");
   const [accountType, setAccountType] = useState("saving");
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
   const location = useLocation();
   const [created, setCreated] = useState(false);
   const branch = location.state.branch;
@@ -33,11 +33,10 @@ const CreateAccount = ({}) => {
       console.log(data);
       data.account_id === null
         ? setError("El cliente no existe")
-        : setAccountID(data.account_id);
-      setCreated(true);
+        : setAccountID(data.account_id) && setCreated(true);
     } catch (e) {
-      console.error("Ha habido un error", e);
       setError(e);
+      console.error("Ha habido un error", e);
     }
   };
 
@@ -87,12 +86,12 @@ const CreateAccount = ({}) => {
         </select>
         <button type="submit">CREAR</button>
       </form>
-      {created && error != null ? (
+      {created ? (
         <h3>La cuenta con ID {accountID} ha sido creada exitosamente</h3>
       ) : (
         ""
       )}
-      {error ? <h3>Ha habido un error: {error}</h3> : ""}
+      {error ? <h3>Ha habido un error: {`${error}`}</h3> : ""}
     </div>
   );
 };
