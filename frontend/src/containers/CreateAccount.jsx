@@ -31,7 +31,9 @@ const CreateAccount = ({}) => {
       );
       const data = await response.json();
       console.log(data);
-      setAccountID(data.account_id);
+      data.account_id === null
+        ? setError("El cliente no existe")
+        : setAccountID(data.account_id);
       setCreated(true);
     } catch (e) {
       console.error("Ha habido un error", e);
@@ -90,7 +92,7 @@ const CreateAccount = ({}) => {
       ) : (
         ""
       )}
-      {error ? <h3>Ha habido un error {error}</h3> : ""}
+      {error ? <h3>Ha habido un error: {error}</h3> : ""}
     </div>
   );
 };
