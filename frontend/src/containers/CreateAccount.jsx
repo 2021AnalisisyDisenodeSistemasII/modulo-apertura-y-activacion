@@ -87,7 +87,7 @@ const CreateAccount = ({}) => {
         </select>
         <button type="submit">CREAR</button>
       </form>
-      {created ? (
+      {created && error != null ? (
         <h3>La cuenta con ID {accountID} ha sido creada exitosamente</h3>
       ) : (
         ""
