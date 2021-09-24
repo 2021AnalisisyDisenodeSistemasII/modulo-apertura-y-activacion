@@ -2,7 +2,6 @@ package opActAcct.starBankbackend.repository.repositoryJson;
 
 import com.google.gson.Gson;
 import opActAcct.starBankbackend.model.Client;
-import opActAcct.starBankbackend.model.CompanyClient;
 import opActAcct.starBankbackend.model.NaturalClient;
 
 import java.io.*;
@@ -14,7 +13,9 @@ import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
 
 public class NaturalClientJSON extends ClientJSON {
 
-    private static String fileName = "natural_clients.json";
+    private static final String fileName = "natural_clients.json";
+
+
     private static HashMap<String, LinkedTreeMap<String,Object>> clients= new HashMap<>();
 
     @Override
@@ -39,12 +40,12 @@ public class NaturalClientJSON extends ClientJSON {
                 (String) clientMap.get("client_address"));
 
         //Actualiza el cliente en el JSON
-        updateJson(client, fileName);
+        this.update(client, fileName);
 
     }
 
     @Override
-    public void addToJson(Object objectToWrite, String fileName) throws DuplicateKeyException {
+    public void add(Object objectToWrite, String fileName) throws DuplicateKeyException {
         // (0) Crea el archivo en caso de que no exista
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
         }
@@ -63,7 +64,7 @@ public class NaturalClientJSON extends ClientJSON {
 
         // (1) Se comprueba que el ID no exista.
         Client client = (Client) objectToWrite;
-        clients= (HashMap) readJson(fileName);
+        clients= (HashMap) read(fileName);
         if(clients.containsKey( client.getClient_id())){     //Si ingresa es porque el id ya existe
             throw new DuplicateKeyException(client.getClient_id());
         }
@@ -96,7 +97,7 @@ public class NaturalClientJSON extends ClientJSON {
     }
 
     @Override
-    public void updateJson(Object clientObject, String fileName) throws KeyDoesNotExistException {
+    public void update(Object clientObject, String fileName) throws KeyDoesNotExistException {
 
         // (1) Se comprueba que EXISTA el ID.
         NaturalClient naturalClient = (NaturalClient) clientObject;

@@ -2,8 +2,8 @@ package opActAcct.starBankbackend.repository.repositoryJson;
 
 import com.google.gson.internal.LinkedTreeMap;
 import opActAcct.starBankbackend.model.CurrentAccount;
+import opActAcct.starBankbackend.repository.interfaces.IAccountRepository;
 import opActAcct.starBankbackend.repository.interfaces.IClientRepository;
-import opActAcct.starBankbackend.repository.interfaces.ICurrentAccountRepository;
 import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
 import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
 
@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class CurrentAccountJSON extends AccountJSON implements ICurrentAccountRepository {
+public class CurrentAccountJSON extends AccountJSON implements IAccountRepository {
 
     private static String fileName = "current_accounts.json";
     private static HashMap<String, LinkedTreeMap<String,Object>> accounts= new HashMap<>();
@@ -29,7 +29,7 @@ public class CurrentAccountJSON extends AccountJSON implements ICurrentAccountRe
     }
 
     @Override
-    public void createNewAccount(String account_id, String client_id, String sucursal_id) throws DuplicateKeyException, KeyDoesNotExistException {
+    public void createNewAccount(String client_id, String sucursal_id, String account_id) throws DuplicateKeyException, KeyDoesNotExistException {
         // (1) Verifica que el cliente si exista.
         IClientRepository clientRepository = new CompanyClientJSON();
         try{
@@ -48,7 +48,7 @@ public class CurrentAccountJSON extends AccountJSON implements ICurrentAccountRe
         CurrentAccount account = new CurrentAccount(account_id, client_id, sucursal_id, false, Float.parseFloat("0"), new ArrayList(), fecha.toString());
 
         // (4) Sobreescribe el Json con todas las cuentas que aloja el Diccionario llamado account
-        addToJson(account, fileName);
+        add(account, fileName);
 
         // (5) Asocia una cuenta al cliente.
         clientRepository.associateAccountToClient(account_id, client_id);

@@ -55,7 +55,7 @@ public class AccountController {
         String sucursal_id = account.getSucursal_id();
 
         try{
-             savingAccountServices.createANewAccount(client_id, sucursal_id);
+             savingAccountServices.createANewAccount(client_id, sucursal_id, null);
              return "exito";
         }catch (ObjectAlreadyExistsException oae){
             System.out.println(oae);

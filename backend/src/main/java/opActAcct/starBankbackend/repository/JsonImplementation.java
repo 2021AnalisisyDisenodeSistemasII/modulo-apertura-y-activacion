@@ -8,9 +8,10 @@ import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
 import java.io.*;
 import java.util.HashMap;
 
-public abstract class JsonImplementation {
+public abstract class JsonImplementation implements  IImplementation{
 
-    public void addToJson(Object objectToWrite, String fileName) throws DuplicateKeyException{
+    @Override
+    public void add(Object objectToWrite, String fileName) throws DuplicateKeyException{
         // (0) Crea el archivo en caso de que no exista
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
         }
@@ -28,7 +29,9 @@ public abstract class JsonImplementation {
         }
 
     }
-    public void updateJson(Object object, String fileName) throws KeyDoesNotExistException{
+
+    @Override
+    public void update(Object object, String fileName) throws KeyDoesNotExistException{
         // (0) Crea el archivo en caso de que no exista
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
         }
@@ -47,7 +50,8 @@ public abstract class JsonImplementation {
 
     }
 
-    public Object readJson(String fileName) {
+    @Override
+    public Object read(String fileName) {
 
 
         Gson gson = new Gson();        //Variable para API Gson. Esta nos regalará los metodos para pasar entre JAVA y Json

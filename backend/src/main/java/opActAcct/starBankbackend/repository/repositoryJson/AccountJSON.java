@@ -6,16 +6,17 @@ import opActAcct.starBankbackend.model.Account;
 import opActAcct.starBankbackend.repository.JsonImplementation;
 import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
 import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
+import opActAcct.starBankbackend.repository.interfaces.IAccountRepository;
 
 import java.io.*;
 import java.util.HashMap;
 
-public abstract class AccountJSON extends JsonImplementation {
+public abstract class AccountJSON extends JsonImplementation implements IAccountRepository {
 
     private static HashMap<String, LinkedTreeMap<String,Object>> accounts= new HashMap<>();
 
     @Override
-    public void addToJson(Object objectToWrite, String fileName) throws DuplicateKeyException {
+    public void add(Object objectToWrite, String fileName) throws DuplicateKeyException {
 
         // (0) Crea el archivo en caso de que no exista
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
@@ -35,7 +36,7 @@ public abstract class AccountJSON extends JsonImplementation {
 
         // (1) Se comprueba que el ID no exista.
         Account accountToWrite = (Account) objectToWrite;
-        accounts= (HashMap) readJson(fileName);
+        accounts= (HashMap) read(fileName);
         if(accounts.containsKey( accountToWrite.getAccount_id())){     //Si ingresa es porque el id ya existe
             throw new DuplicateKeyException(accountToWrite.getAccount_id());
         }
@@ -67,7 +68,7 @@ public abstract class AccountJSON extends JsonImplementation {
     }
 
     @Override
-    public void updateJson(Object objectToWrite, String fileName) throws KeyDoesNotExistException {
+    public void update(Object objectToWrite, String fileName) throws KeyDoesNotExistException {
 
         // (0) Crea el archivo en caso de que no exista
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
@@ -87,7 +88,7 @@ public abstract class AccountJSON extends JsonImplementation {
 
         // (1) Se comprueba que EXISTA el ID.
         Account account = (Account) objectToWrite;
-        accounts= (HashMap) readJson(fileName);
+        accounts= (HashMap) read(fileName);
         if(!accounts.containsKey( account.getAccount_id())){     //Si ingresa es porque el id NO EXISTE
             throw new KeyDoesNotExistException(account.getAccount_id());
         }
@@ -118,5 +119,13 @@ public abstract class AccountJSON extends JsonImplementation {
             System.out.println(ex.getMessage());
         }
     }
+
+    @Override
+    public abstract void createNewAccount(
+            String client_id,
+            String sucursal_id,
+            String account_id)
+            throws DuplicateKeyException,
+            KeyDoesNotExistException;
 
 }

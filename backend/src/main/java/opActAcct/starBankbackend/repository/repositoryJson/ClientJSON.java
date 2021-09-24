@@ -1,17 +1,11 @@
 package opActAcct.starBankbackend.repository.repositoryJson;
 
-import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
-import opActAcct.starBankbackend.model.Client;
-import opActAcct.starBankbackend.model.CompanyClient;
-import opActAcct.starBankbackend.model.NaturalClient;
-import opActAcct.starBankbackend.model.SavingAccount;
 import opActAcct.starBankbackend.repository.JsonImplementation;
 import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
 import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
 import opActAcct.starBankbackend.repository.interfaces.IClientRepository;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,8 +19,18 @@ public abstract class ClientJSON extends JsonImplementation implements IClientRe
         listClientFileNames.add("company_clients.json");
     }
 
+    @Override
+    public abstract void add(Object objectToWrite, String fileName) throws DuplicateKeyException;
+
+    @Override
+    public abstract void update(Object clientObject, String fileName) throws KeyDoesNotExistException;
+
+    @Override
+    public abstract void associateAccountToClient(String account_id, String client_id) throws  KeyDoesNotExistException;
+
+    @Override
     public Object findClient(String id_client, String fileName) throws KeyDoesNotExistException {
-        clients = (HashMap) readJson(fileName);
+        clients = (HashMap) read(fileName);
         if (clients.containsKey(id_client)){
             return clients;
         }

@@ -1,7 +1,7 @@
 package opActAcct.starBankbackend.services;
+import opActAcct.starBankbackend.repository.interfaces.IAccountRepository;
 import opActAcct.starBankbackend.repository.repositoryJson.*;
 import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
-import opActAcct.starBankbackend.repository.interfaces.ICurrentAccountRepository;
 import opActAcct.starBankbackend.services.exception.ObjectDoesNotExistException;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import opActAcct.starBankbackend.services.exception.ObjectAlreadyExistsException
 @Service
 public class CurrentAccountServices {
 
-    private ICurrentAccountRepository accountRepository = new CurrentAccountJSON();    //Implementación
+    private IAccountRepository accountRepository = new CurrentAccountJSON();    //Implementación
 
     public void createANewAccount(String account_id, String client_id, String sucursal_id) throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
         try{
