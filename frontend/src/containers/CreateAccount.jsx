@@ -6,7 +6,10 @@ import Header from "../components/Header";
 
 const CreateAccount = ({}) => {
   const [userID, setUserID] = useState("");
+  const [nit, setNit] = useState("");
+  const [userType, setUserType] = useState("natural");
   const [accountType, setAccountType] = useState("saving");
+  const [error, setError] = useState();
   const location = useLocation();
   const [created, setCreated] = useState(false);
   const branch = location.state.branch;
@@ -17,7 +20,7 @@ const CreateAccount = ({}) => {
     try {
       e.preventDefault();
       const response = await fetch(
-        `http://localhost:8080/api/account/${accountType}Account/?client_id=${userID}&sucursal_id=${branch}`,
+        `http://localhost:8080/api/account/${accountType}Account/?client_id=${userID}&sucursal_id=${branch}&nit=${nit}`,
         {
           method: "POST",
           headers: new Headers({
@@ -32,6 +35,7 @@ const CreateAccount = ({}) => {
       setCreated(true);
     } catch (e) {
       console.error("Ha habido un error", e);
+      setError(e);
     }
   };
 
@@ -40,6 +44,16 @@ const CreateAccount = ({}) => {
       <img src={`${TopBalls}`} className="top-balls" alt="" />
       <Header />
       <form action="" onSubmit={handleCreation}>
+        <label htmlFor="usrtype">Enter user type</label>
+        <select
+          name="usrtype"
+          type="number"
+          value={userType}
+          onChange={(e) => setUserType(e.target.value)}
+        >
+          <option value="natural">Natural</option>
+          <option value="enterprise">Empresa</option>
+        </select>
         <label htmlFor="usrid">Enter userID</label>
         <input
           name="usrid"
@@ -47,6 +61,19 @@ const CreateAccount = ({}) => {
           value={userID}
           onChange={(e) => setUserID(e.target.value)}
         />
+        {userType === "enterprise" ? (
+          <>
+            <label htmlFor="nit">Enter NIT</label>
+            <input
+              name="nit"
+              type="number"
+              value={nit}
+              onChange={(e) => setNit(e.target.value)}
+            />
+          </>
+        ) : (
+          ""
+        )}
         <label htmlFor="usrid">Tipo de cuenta a crear</label>
         <select
           name=""
@@ -63,6 +90,7 @@ const CreateAccount = ({}) => {
       ) : (
         ""
       )}
+      {error ? <h3>Ha habido un error {error}</h3> : ""}
     </div>
   );
 };
