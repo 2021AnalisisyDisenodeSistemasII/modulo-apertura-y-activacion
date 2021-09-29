@@ -48,7 +48,7 @@ const CreateAccount = ({}) => {
         <label htmlFor="usrtype">Enter user type</label>
         <select
           name="usrtype"
-          type="number"
+          type="text"
           value={userType}
           onChange={(e) => setUserType(e.target.value)}
         >
@@ -58,7 +58,7 @@ const CreateAccount = ({}) => {
         <label htmlFor="usrid">Enter userID</label>
         <input
           name="usrid"
-          type="number"
+          type="text"
           value={userID}
           onChange={(e) => setUserID(e.target.value)}
         />
@@ -67,7 +67,7 @@ const CreateAccount = ({}) => {
             <label htmlFor="nit">Enter NIT</label>
             <input
               name="nit"
-              type="number"
+              type="text"
               value={nit}
               onChange={(e) => setNit(e.target.value)}
             />
@@ -91,7 +91,7 @@ const CreateAccount = ({}) => {
       ) : (
         ""
       )}
-      {error ? <h3>Ha habido un error: {`${error}`}</h3> : ""}
+      {error ? <h3 className="error">Ha habido un error: {`${error}`}</h3> : ""}
     </div>
   );
 };
