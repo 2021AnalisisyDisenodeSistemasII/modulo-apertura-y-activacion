@@ -65,22 +65,21 @@ public class AccountController {
         return cuenta;
     }
 
-    /*@PostMapping(path = "/currentAccount")
-    public String createANewACurrentAccount(@RequestParam String id){
-        String client_id = account.getClient_id();
-        String sucursal_id = account.getSucursal_id();
-        String nit = account.getAccount_id();
+    @PostMapping(path = "/currentAccount")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CurrentAccount createNewCurrentAccount(@RequestParam String client_id, @RequestParam String sucursal_id, @RequestParam String nit){
+        CurrentAccount cuenta = new CurrentAccount();
         try{
-            currentAccountServices.createANewAccount(nit,client_id, sucursal_id);
-            return "exito";
+            cuenta = currentAccountServices.createANewAccount(nit,client_id, sucursal_id);
         }catch (ObjectAlreadyExistsException oae){
             System.out.println(oae);
-        } catch ( ObjectDoesNotExistException one){
+        }
+        catch (ObjectDoesNotExistException one){
             System.out.println(one);
         }
-
-        return "error";
-    }*/
+        System.out.println(cuenta);
+        return cuenta;
+    }
 
     @PutMapping(path = "savingAccount/")
     public void activateSavingAccount(@RequestParam String client_id){

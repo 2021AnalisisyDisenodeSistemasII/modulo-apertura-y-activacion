@@ -31,9 +31,15 @@ const CreateAccount = ({}) => {
       );
       const data = await response.json();
       console.log(data);
-      data.account_id === null
-        ? setError("El cliente no existe")
-        : setAccountID(data.account_id) && setCreated(true);
+      
+      if (data.account_id === null){
+        setError("El cliente no existe")
+        setCreated(false);
+      }
+      else {
+        setAccountID(data.account_id);
+        setCreated(true);
+      }
     } catch (e) {
       setError(e);
       console.error("Ha habido un error", e);
@@ -87,7 +93,9 @@ const CreateAccount = ({}) => {
         <button type="submit">CREAR</button>
       </form>
       {created ? (
-        <h3>La cuenta con ID {accountID} ha sido creada exitosamente</h3>
+        <div>
+          <h3>La cuenta con ID {accountID} ha sido creada exitosamente</h3>
+        </div>
       ) : (
         ""
       )}

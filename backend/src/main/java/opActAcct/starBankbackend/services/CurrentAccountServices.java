@@ -1,4 +1,5 @@
 package opActAcct.starBankbackend.services;
+import opActAcct.starBankbackend.model.CurrentAccount;
 import opActAcct.starBankbackend.repository.interfaces.IAccountRepository;
 import opActAcct.starBankbackend.repository.repositoryJson.*;
 import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
@@ -13,9 +14,9 @@ public class CurrentAccountServices {
 
     private IAccountRepository accountRepository = new CurrentAccountJSON();    //Implementación
 
-    public void createANewAccount(String account_id, String client_id, String sucursal_id) throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
+    public CurrentAccount createANewAccount(String account_id, String client_id, String sucursal_id) throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
         try{
-            accountRepository.createNewAccount(account_id, client_id, sucursal_id);
+            return (CurrentAccount) accountRepository.createNewAccount(account_id, client_id, sucursal_id);
         }
         catch (KeyDoesNotExistException kne){
             System.out.println(kne);
