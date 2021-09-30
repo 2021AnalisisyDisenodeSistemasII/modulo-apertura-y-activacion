@@ -1,5 +1,31 @@
 @use './home.scss';
+@use '../mixins.scss' as m;
+@use '../colors.scss' as colors;
 
 .create-account--container {
   @extend .home-container;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input,
+    select {
+      @include m.longField(colors.$glassy-white);
+      color: colors.$black;
+      border: 2px solid colors.$dark-blue;
+      margin: 1em;
+    }
+    button {
+      @include m.longField(colors.$dark-green);
+    }
+    option {
+      color: black;
+    }
+    label {
+      font-size: 1.2em;
+    }
+  }
+  .error {
+    color: red;
+  }
 }

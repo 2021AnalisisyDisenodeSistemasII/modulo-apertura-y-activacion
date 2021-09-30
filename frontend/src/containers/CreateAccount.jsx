@@ -31,9 +31,15 @@ const CreateAccount = ({}) => {
       );
       const data = await response.json();
       console.log(data);
-      data.account_id === null
-        ? setError("El cliente no existe")
-        : setAccountID(data.account_id) && setCreated(true);
+      
+      if (data.account_id === null){
+        setError("El cliente no existe")
+        setCreated(false);
+      }
+      else {
+        setAccountID(data.account_id);
+        setCreated(true);
+      }
     } catch (e) {
       setError(e);
       console.error("Ha habido un error", e);
@@ -48,7 +54,7 @@ const CreateAccount = ({}) => {
         <label htmlFor="usrtype">Enter user type</label>
         <select
           name="usrtype"
-          type="number"
+          type="text"
           value={userType}
           onChange={(e) => setUserType(e.target.value)}
         >
@@ -58,7 +64,7 @@ const CreateAccount = ({}) => {
         <label htmlFor="usrid">Enter userID</label>
         <input
           name="usrid"
-          type="number"
+          type="text"
           value={userID}
           onChange={(e) => setUserID(e.target.value)}
         />
@@ -67,7 +73,7 @@ const CreateAccount = ({}) => {
             <label htmlFor="nit">Enter NIT</label>
             <input
               name="nit"
-              type="number"
+              type="text"
               value={nit}
               onChange={(e) => setNit(e.target.value)}
             />
@@ -87,11 +93,13 @@ const CreateAccount = ({}) => {
         <button type="submit">CREAR</button>
       </form>
       {created ? (
-        <h3>La cuenta con ID {accountID} ha sido creada exitosamente</h3>
+        <div>
+          <h3>La cuenta con ID {accountID} ha sido creada exitosamente</h3>
+        </div>
       ) : (
         ""
       )}
-      {error ? <h3>Ha habido un error: {`${error}`}</h3> : ""}
+      {error ? <h3 className="error">Ha habido un error: {`${error}`}</h3> : ""}
     </div>
   );
 };
