@@ -49,7 +49,8 @@ public class AccountController {
 
     @PostMapping(path = "/savingAccount")
     @ResponseStatus(HttpStatus.CREATED)
-    public SavingAccount createANewASavingAccount(@RequestParam String client_id, @RequestParam String sucursal_id){
+    public SavingAccount createANewASavingAccount(@RequestParam String client_id,
+                                                  @RequestParam String sucursal_id){
         System.out.println(client_id + sucursal_id);
         SavingAccount cuenta = new SavingAccount();
         try{
@@ -64,11 +65,32 @@ public class AccountController {
         //return "exito";
         return cuenta;
     }
+    @PostMapping(path = "/currentAccount")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CurrentAccount createANewASavingAccount(@RequestParam String client_id,
+                                                   @RequestParam String sucursal_id,
+                                                   @RequestParam String nit){
+        System.out.println(client_id + sucursal_id + nit);
+        CurrentAccount cuenta = new CurrentAccount();
+        try{
+            cuenta = currentAccountServices.createANewAccount(nit,client_id,sucursal_id);
+        }catch (ObjectAlreadyExistsException oae){
+            System.out.println(oae);
+        }
+        catch (ObjectDoesNotExistException one){
+            System.out.println(one);
+        }
+        System.out.println(cuenta);
+        //return "exito";
+        return cuenta;
+    }
 
+/*
     @PostMapping(path = "/currentAccount")
     @ResponseStatus(HttpStatus.CREATED)
     public CurrentAccount createNewCurrentAccount(@RequestParam String client_id, @RequestParam String sucursal_id, @RequestParam String nit){
         CurrentAccount cuenta = new CurrentAccount();
+
         try{
             cuenta = currentAccountServices.createANewAccount(client_id, sucursal_id,nit);
         }catch (ObjectAlreadyExistsException oae){
@@ -86,7 +108,7 @@ public class AccountController {
 
     }
 
-
+*/
 
 
 }

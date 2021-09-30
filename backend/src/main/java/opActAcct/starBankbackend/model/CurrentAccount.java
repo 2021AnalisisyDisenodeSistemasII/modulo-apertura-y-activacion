@@ -8,6 +8,8 @@ public class CurrentAccount extends Account{
         super(account_id, client_id, sucursal_id, status, balance, transactions, creation_date);
     }
 
-    public  CurrentAccount(){super();}
+    public CurrentAccount() {
+        super();
+    }
 
 }
