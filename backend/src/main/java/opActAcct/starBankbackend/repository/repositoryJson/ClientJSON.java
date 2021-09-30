@@ -31,6 +31,7 @@ public abstract class ClientJSON extends JsonImplementation implements IClientRe
     @Override
     public Object findClient(String id_client, String fileName) throws KeyDoesNotExistException {
         clients = (HashMap) read(fileName);
+        System.out.println("lo que busca "+id_client);
         if (clients.containsKey(id_client)){
             return clients;
         }

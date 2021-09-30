@@ -68,7 +68,6 @@ public class AccountController {
     @PostMapping(path = "/currentAccount")
     @ResponseStatus(HttpStatus.CREATED)
     public CurrentAccount createNewCurrentAccount(@RequestParam String client_id, @RequestParam String sucursal_id, @RequestParam String nit){
-        System.out.println("este es el nit que recibee " +nit);
         CurrentAccount cuenta = new CurrentAccount();
         try{
             cuenta = currentAccountServices.createANewAccount(client_id, sucursal_id,nit);

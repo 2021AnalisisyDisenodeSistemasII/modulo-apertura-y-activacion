@@ -14,9 +14,10 @@ public class CurrentAccountServices {
 
     private IAccountRepository accountRepository = new CurrentAccountJSON();    //Implementación
 
-    public CurrentAccount createANewAccount(String account_id, String client_id, String sucursal_id) throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
+    public CurrentAccount createANewAccount(String client_id, String sucursal_id, String account_id) throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
         try{
-            return (CurrentAccount) accountRepository.createNewAccount(account_id, client_id, sucursal_id);
+            CurrentAccount account = (CurrentAccount) accountRepository.createNewAccount(client_id, sucursal_id, account_id);
+            return account;
         }
         catch (KeyDoesNotExistException kne){
             System.out.println(kne);

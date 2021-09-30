@@ -33,10 +33,11 @@ public class CurrentAccountJSON extends AccountJSON implements IAccountRepositor
     public CurrentAccount createNewAccount(String client_id, String sucursal_id, String account_id) throws DuplicateKeyException, KeyDoesNotExistException {
         // (1) Verifica que el cliente si exista.
         IClientRepository clientRepository = new CompanyClientJSON();
+        System.out.println("este es el nit que está buscando" +account_id);
         try{
-            Object client = clientRepository.findClient(client_id, "company_clients.json");
+            Object client = clientRepository.findClient(account_id, "company_clients.json");
         }catch (KeyDoesNotExistException kne){
-            throw new KeyDoesNotExistException(client_id);
+            throw new KeyDoesNotExistException(account_id);
         }
 
         // (2) Verifica que esa account_id (NIT) no exista.
@@ -52,7 +53,7 @@ public class CurrentAccountJSON extends AccountJSON implements IAccountRepositor
         add(account, fileName);
 
         // (5) Asocia una cuenta al cliente.
-        clientRepository.associateAccountToClient(account_id, client_id);
+        //clientRepository.associateAccountToClient(account_id, client_id);
 
         return account;
 
