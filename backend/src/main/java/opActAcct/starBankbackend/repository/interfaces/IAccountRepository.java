@@ -10,4 +10,10 @@ public interface IAccountRepository {
                              String account_id)
             throws DuplicateKeyException,
             KeyDoesNotExistException;
+
+    boolean activeAccount(String account_id, Boolean is_active)
+        throws KeyDoesNotExistException;
+
+    boolean updateStatus(String account_id, String fileName)
+            throws KeyDoesNotExistException;
 }

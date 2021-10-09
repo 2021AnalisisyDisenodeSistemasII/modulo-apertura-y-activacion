@@ -3,6 +3,7 @@ package opActAcct.starBankbackend.repository.repositoryJson;
 import com.google.gson.internal.LinkedTreeMap;
 import opActAcct.starBankbackend.model.Account;
 import opActAcct.starBankbackend.model.CurrentAccount;
+import opActAcct.starBankbackend.model.SavingAccount;
 import opActAcct.starBankbackend.repository.interfaces.IAccountRepository;
 import opActAcct.starBankbackend.repository.interfaces.IClientRepository;
 import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
@@ -57,6 +58,13 @@ public class CurrentAccountJSON extends AccountJSON implements IAccountRepositor
 
         return account;
 
+    }
+
+    public boolean activeAccount(String account_id, Boolean is_active)throws KeyDoesNotExistException{
+        if(is_active){     //Si ingresa es porque la cuenta existe
+            return updateStatus(account_id, fileName);
+        }
+        return false;
     }
 
 

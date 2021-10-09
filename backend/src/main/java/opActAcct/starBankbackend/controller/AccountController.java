@@ -41,17 +41,10 @@ public class AccountController {
         this.currentAccountServices = currentAccountServices;
     }
 
-    @GetMapping(path = {"/Inicio", "/"})
-    public String inicio(){
-        //model.addAttribute("Lubs", this.getLubricantes());
-        return "index";
-    }
-
     @PostMapping(path = "/savingAccount")
     @ResponseStatus(HttpStatus.CREATED)
     public SavingAccount createANewASavingAccount(@RequestParam String client_id,
                                                   @RequestParam String sucursal_id){
-        System.out.println(client_id + sucursal_id);
         SavingAccount cuenta = new SavingAccount();
         try{
             cuenta = savingAccountServices.createANewAccount(client_id, sucursal_id, null);
@@ -61,8 +54,6 @@ public class AccountController {
         catch (ObjectDoesNotExistException one){
             System.out.println(one);
         }
-        System.out.println(cuenta);
-        //return "exito";
         return cuenta;
     }
     @PostMapping(path = "/currentAccount")
@@ -73,7 +64,7 @@ public class AccountController {
         System.out.println(client_id + sucursal_id + nit);
         CurrentAccount cuenta = new CurrentAccount();
         try{
-            cuenta = currentAccountServices.createANewAccount(nit,client_id,sucursal_id);
+            cuenta = currentAccountServices.createANewAccount(client_id,sucursal_id, nit);
         }catch (ObjectAlreadyExistsException oae){
             System.out.println(oae);
         }
@@ -81,34 +72,33 @@ public class AccountController {
             System.out.println(one);
         }
         System.out.println(cuenta);
-        //return "exito";
         return cuenta;
     }
 
-/*
-    @PostMapping(path = "/currentAccount")
+    @PostMapping(path = "/active/savingAccount")
     @ResponseStatus(HttpStatus.CREATED)
-    public CurrentAccount createNewCurrentAccount(@RequestParam String client_id, @RequestParam String sucursal_id, @RequestParam String nit){
-        CurrentAccount cuenta = new CurrentAccount();
-
+    public boolean activeSavingAccount(@RequestParam String account_id){
         try{
-            cuenta = currentAccountServices.createANewAccount(client_id, sucursal_id,nit);
-        }catch (ObjectAlreadyExistsException oae){
-            System.out.println(oae);
+            return savingAccountServices.ActiveSavingAccount(account_id, true);
         }
         catch (ObjectDoesNotExistException one){
             System.out.println(one);
         }
-        System.out.println(cuenta);
-        return cuenta;
+        return false;
     }
 
-    @PutMapping(path = "savingAccount/")
-    public void activateSavingAccount(@RequestParam String client_id){
-
+    @PostMapping(path = "/active/currentAccount")
+    @ResponseStatus(HttpStatus.CREATED)
+    public boolean activeCurrentAccount(@RequestParam String account_id){
+        try{
+            return currentAccountServices.ActiveCurrentAccount(account_id, true);
+        }
+        catch (ObjectDoesNotExistException one){
+            System.out.println(one);
+        }
+        return false;
     }
 
-*/
 
 
 }

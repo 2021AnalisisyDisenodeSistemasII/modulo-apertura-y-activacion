@@ -121,11 +121,39 @@ public abstract class AccountJSON extends JsonImplementation implements IAccount
     }
 
     @Override
+    public boolean updateStatus (String account_id, String fileName) throws KeyDoesNotExistException{
+        accounts= (HashMap) read(fileName);
+        if(accounts.containsKey( account_id )){     //Si ingresa es porque la cuenta existe
+            LinkedTreeMap<String, Object> accountInfo = accounts.get(account_id);
+            accountInfo.replace("isActive", "true");
+
+            Gson gson = new Gson();
+            String stringToWrite = gson.toJson(accounts);
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+                bw.write(stringToWrite);
+                return true;
+            } catch (FileNotFoundException ex) {
+                System.out.println(ex.getMessage());
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return false;
+    }
+
+    @Override
     public abstract Account  createNewAccount(
             String client_id,
             String sucursal_id,
             String account_id)
             throws DuplicateKeyException,
             KeyDoesNotExistException;
+
+
+    public abstract boolean activeAccount(
+            String client_id,
+            Boolean is_active)
+            throws KeyDoesNotExistException;
 
 }
