@@ -7,6 +7,7 @@ const ActivateAccount = () => {
   const [accountType, setAccountType] = useState("saving");
   const [accountID, setAccountID] = useState("");
   const [created, setCreated] = useState(false);
+  const [error, setError] = useState();
 
   const handleActivation = async (e) => {
     e.preventDefault();
@@ -22,7 +23,12 @@ const ActivateAccount = () => {
     );
     const data = await response.json();
     console.log(data);
-    data === true ? setCreated(true) : setCreated(false);
+    if (data === true) {
+      setCreated(true);
+    } else {
+      setCreated(false);
+      setError(`No se pudo activar la cuenta ${accountID}`);
+    }
   };
 
   return (
@@ -57,6 +63,7 @@ const ActivateAccount = () => {
       ) : (
         ""
       )}
+      {error ? <h3 className="error">Ha habido un error: {`${error}`}</h3> : ""}
     </div>
   );
 };
