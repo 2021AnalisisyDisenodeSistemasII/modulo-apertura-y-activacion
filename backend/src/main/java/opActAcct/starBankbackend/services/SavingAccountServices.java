@@ -30,4 +30,14 @@ public class SavingAccountServices {
 
 
     }
+
+    public boolean ActiveSavingAccount (String account_id, Boolean is_active)throws ObjectDoesNotExistException{
+        try{
+            return accountRepository.activeAccount(account_id, is_active);
+        }
+        catch (KeyDoesNotExistException kne){
+            System.out.println(kne);
+            throw new ObjectDoesNotExistException(String.format("El cliente no existe" ));
+        }
+    }
 }

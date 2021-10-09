@@ -31,6 +31,13 @@ public abstract class Account {
     public Account() {
     }
 
+    public Account(String account_id, String client_id, Float balance, Boolean status) {
+        this.account_id = account_id;
+        this.client_id = client_id;
+        this.balance = balance;
+        this.status = status;
+    }
+
     public String getAccount_id() {
         return account_id;
     }
