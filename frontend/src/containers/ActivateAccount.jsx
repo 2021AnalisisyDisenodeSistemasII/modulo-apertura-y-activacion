@@ -8,7 +8,8 @@ const ActivateAccount = () => {
   const [accountID, setAccountID] = useState("");
   const [created, setCreated] = useState(false);
 
-  const handleActivation = async () => {
+  const handleActivation = async (e) => {
+    e.preventDefault();
     const response = await fetch(
       `http://localhost:8080/api/account/active/${accountType}Account/?account_id=${accountID}`,
       {
@@ -21,20 +22,23 @@ const ActivateAccount = () => {
     );
     const data = await response.json();
     console.log(data);
-    data[0] === true ? setCreated(true) : setCreated("false");
+    data === true ? setCreated(true) : setCreated(false);
   };
 
   return (
     <div className="create-account--container">
       <img src={`${TopBalls}`} className="top-balls" alt="" />
       <Header />
-      <form action="" onSubmit={handleActivation}>
+      <form action="" preventdefault="true" onSubmit={handleActivation}>
         <label htmlFor="accountid">Enter accountID</label>
         <input
           name="accountid"
           type="text"
           value={accountID}
-          onChange={(e) => setAccountID(e.target.value)}
+          onChange={(e) => {
+            setAccountID(e.target.value);
+            setCreated(false);
+          }}
         />
         <label htmlFor="accounttype">Tipo de cuenta a activar</label>
         <select
