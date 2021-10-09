@@ -25,6 +25,7 @@ const ActivateAccount = () => {
     console.log(data);
     if (data === true) {
       setCreated(true);
+      setError(false);
     } else {
       setCreated(false);
       setError(`No se pudo activar la cuenta ${accountID}`);
