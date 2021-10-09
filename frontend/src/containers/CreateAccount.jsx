@@ -13,7 +13,6 @@ const CreateAccount = ({}) => {
   const location = useLocation();
   const [created, setCreated] = useState(false);
   const branch = location.state.branch;
-  const cashier = location.state.cashier;
   const [accountID, setAccountID] = useState("0");
 
   const handleCreation = async (e) => {
@@ -81,7 +80,7 @@ const CreateAccount = ({}) => {
         ) : (
           ""
         )}
-        <label htmlFor="usrid">Tipo de cuenta a crear</label>
+        <label htmlFor="">Tipo de cuenta a crear</label>
         <select
           name=""
           id=""
