@@ -1,5 +1,6 @@
 package opActAcct.starBankbackend.repository.repositoryJson;
 
+import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import opActAcct.starBankbackend.model.*;
 import opActAcct.starBankbackend.repository.interfaces.IClientRepository;
@@ -7,6 +8,7 @@ import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
 import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SavingAccountJSON extends AccountJSON  {
 
@@ -57,6 +59,14 @@ public class SavingAccountJSON extends AccountJSON  {
         // (5) Asocia una cuenta al cliente.
         clientRepository.associateAccountToClient(account_id, client_id);
         return account;
+    }
+
+    public boolean activeAccount(String account_id, Boolean is_active) throws KeyDoesNotExistException {
+        SavingAccount account = new SavingAccount();
+        if(is_active ){     //Si ingresa es porque la cuenta existe
+            return updateStatus(account_id, fileName);
+        }
+        return true;
     }
 
 

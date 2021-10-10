@@ -13,11 +13,11 @@ const CreateAccount = ({}) => {
   const location = useLocation();
   const [created, setCreated] = useState(false);
   const branch = location.state.branch;
-  const cashier = location.state.cashier;
   const [accountID, setAccountID] = useState("0");
 
   const handleCreation = async (e) => {
     try {
+      console.log(accountType);
       e.preventDefault();
       const response = await fetch(
         `http://localhost:8080/api/account/${accountType}Account/?client_id=${userID}&sucursal_id=${branch}&nit=${nit}`,
@@ -31,12 +31,11 @@ const CreateAccount = ({}) => {
       );
       const data = await response.json();
       console.log(data);
-      
-      if (data.account_id === null){
-        setError("El cliente no existe")
+
+      if (data.account_id === null) {
+        setError("El cliente no existe");
         setCreated(false);
-      }
-      else {
+      } else {
         setAccountID(data.account_id);
         setCreated(true);
       }
@@ -81,14 +80,14 @@ const CreateAccount = ({}) => {
         ) : (
           ""
         )}
-        <label htmlFor="usrid">Tipo de cuenta a crear</label>
+        <label htmlFor="">Tipo de cuenta a crear</label>
         <select
           name=""
           id=""
           onClick={(e) => setAccountType(e.currentTarget.value)}
         >
-          <option value="current">Corriente</option>
           <option value="saving">Ahorros</option>
+          <option value="current">Corriente</option>
         </select>
         <button type="submit">CREAR</button>
       </form>

@@ -11,4 +11,8 @@ public class SavingAccount extends Account{
     public SavingAccount() {
         super();
     }
+
+    public SavingAccount(String account_id, String client_id, Float balance, boolean status) {
+        super(account_id, client_id, balance, status);
+    }
 }

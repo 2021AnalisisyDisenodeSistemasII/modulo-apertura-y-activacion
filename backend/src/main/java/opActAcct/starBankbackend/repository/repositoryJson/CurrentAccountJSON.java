@@ -3,6 +3,7 @@ package opActAcct.starBankbackend.repository.repositoryJson;
 import com.google.gson.internal.LinkedTreeMap;
 import opActAcct.starBankbackend.model.Account;
 import opActAcct.starBankbackend.model.CurrentAccount;
+import opActAcct.starBankbackend.model.SavingAccount;
 import opActAcct.starBankbackend.repository.interfaces.IAccountRepository;
 import opActAcct.starBankbackend.repository.interfaces.IClientRepository;
 import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
@@ -33,10 +34,9 @@ public class CurrentAccountJSON extends AccountJSON implements IAccountRepositor
     public CurrentAccount createNewAccount(String client_id, String sucursal_id, String account_id) throws DuplicateKeyException, KeyDoesNotExistException {
         // (1) Verifica que el cliente si exista.
         IClientRepository clientRepository = new CompanyClientJSON();
+        System.out.println("este es el nit que está buscando" +account_id);
         try{
-            System.out.println("account_id:   " + account_id);
             clientRepository.findClient(account_id, "company_clients.json");
-
         }catch (KeyDoesNotExistException kne){
             throw new KeyDoesNotExistException(account_id);
         }
@@ -54,10 +54,17 @@ public class CurrentAccountJSON extends AccountJSON implements IAccountRepositor
         add(account, fileName);
 
         // (5) Asocia una cuenta al cliente.
-        clientRepository.associateAccountToClient(account_id, client_id);
+        //clientRepository.associateAccountToClient(account_id, client_id);
 
         return account;
 
+    }
+
+    public boolean activeAccount(String account_id, Boolean is_active)throws KeyDoesNotExistException{
+        if(is_active){     //Si ingresa es porque la cuenta existe
+            return updateStatus(account_id, fileName);
+        }
+        return false;
     }
 
 

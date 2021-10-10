@@ -29,7 +29,14 @@ public abstract class ClientJSON extends JsonImplementation implements IClientRe
     public abstract void associateAccountToClient(String account_id, String client_id) throws  KeyDoesNotExistException;
 
     @Override
-    public abstract Object findClient(String id_client, String fileName) throws KeyDoesNotExistException;
+    public Object findClient(String id_client, String fileName) throws KeyDoesNotExistException {
+        clients = (HashMap) read(fileName);
+        System.out.println("lo que busca "+id_client);
+        if (clients.containsKey(id_client)){
+            return clients;
+        }
+        throw new KeyDoesNotExistException(id_client);
+    }
 
     /*
     @Override
