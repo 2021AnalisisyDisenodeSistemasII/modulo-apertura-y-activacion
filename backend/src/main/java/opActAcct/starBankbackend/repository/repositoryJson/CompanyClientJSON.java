@@ -137,4 +137,14 @@ public class CompanyClientJSON extends ClientJSON implements IClientRepository {
         this.update(client, fileName);
     }
 
+    @Override
+    public Object findClient(String id_client, String fileName) throws KeyDoesNotExistException {
+        clients = (HashMap) read(fileName);
+        if (clients.containsKey(id_client)){
+            return clients;
+        }
+        throw new KeyDoesNotExistException(id_client);
+    }
+
+
 }

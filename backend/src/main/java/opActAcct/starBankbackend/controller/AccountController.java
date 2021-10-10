@@ -73,7 +73,7 @@ public class AccountController {
         System.out.println(client_id + sucursal_id + nit);
         CurrentAccount cuenta = new CurrentAccount();
         try{
-            cuenta = currentAccountServices.createANewAccount(nit,client_id,sucursal_id);
+            cuenta = currentAccountServices.createANewAccount(client_id,sucursal_id,nit);
         }catch (ObjectAlreadyExistsException oae){
             System.out.println(oae);
         }

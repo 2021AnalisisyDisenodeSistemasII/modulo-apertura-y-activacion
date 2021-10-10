@@ -11,7 +11,8 @@ import java.util.HashMap;
 public abstract class JsonImplementation implements  IImplementation{
 
     @Override
-    public void add(Object objectToWrite, String fileName) throws DuplicateKeyException{
+    public abstract void add(Object objectToWrite, String fileName) throws DuplicateKeyException;
+    /*{
         // (0) Crea el archivo en caso de que no exista
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
         }
@@ -28,10 +29,11 @@ public abstract class JsonImplementation implements  IImplementation{
             System.out.println("Problema, mirar error IOE");
         }
 
-    }
+    }*/
 
     @Override
-    public void update(Object object, String fileName) throws KeyDoesNotExistException{
+    public abstract void update(Object object, String fileName) throws KeyDoesNotExistException;
+    /*{
         // (0) Crea el archivo en caso de que no exista
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
         }
@@ -48,7 +50,7 @@ public abstract class JsonImplementation implements  IImplementation{
             System.out.println("Problema, mirar error IOE");
         }
 
-    }
+    }*/
 
     @Override
     public Object read(String fileName) {

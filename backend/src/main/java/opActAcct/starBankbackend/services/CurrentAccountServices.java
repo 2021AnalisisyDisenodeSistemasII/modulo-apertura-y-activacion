@@ -16,11 +16,11 @@ public class CurrentAccountServices {
 
     public CurrentAccount createANewAccount(String account_id, String client_id, String sucursal_id) throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
         try{
-            return (CurrentAccount) accountRepository.createNewAccount(account_id, client_id, sucursal_id);
+            return (CurrentAccount) accountRepository.createNewAccount(client_id, sucursal_id, account_id);
         }
         catch (KeyDoesNotExistException kne){
             System.out.println(kne);
-            throw new ObjectDoesNotExistException(String.format("El cliente no existe" ));
+            throw new ObjectDoesNotExistException(String.format("El nit "+ account_id+ " no existe" ));
         }
         catch(DuplicateKeyException dke){
             System.out.println(dke);
