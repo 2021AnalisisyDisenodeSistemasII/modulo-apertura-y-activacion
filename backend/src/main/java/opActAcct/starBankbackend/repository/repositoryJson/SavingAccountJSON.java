@@ -1,6 +1,5 @@
 package opActAcct.starBankbackend.repository.repositoryJson;
 
-import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import opActAcct.starBankbackend.model.*;
 import opActAcct.starBankbackend.repository.interfaces.IClientRepository;
@@ -8,32 +7,30 @@ import opActAcct.starBankbackend.repository.exception.DuplicateKeyException;
 import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SavingAccountJSON extends AccountJSON  {
 
-    private static String fileName = "saving_accounts.json";
-    private static HashMap<String, LinkedTreeMap<String,Object>> accounts= new HashMap<>();
+    //Nombre de archivo donde se alojarán las cuentas de ahorros.
+    private static final String fileName = "saving_accounts.json";
 
     public SavingAccountJSON() {
 
     }
 
     /**
+     * Implementación de método que crea una nueva cuenta de tipo ahorros.
+     * Método heredado de IAccountRepository y extendido de AccountJSON.
      *
-     * @param client_id
-     * @param sucursal_id
-     * @param account_id_null Siempre es NULL en esta implementación.
-     * @throws DuplicateKeyException
-     * @throws KeyDoesNotExistException
+     * @param client_id : id del cliente al que se le creará la nueva cuenta
+     * @param sucursal_id : Sucursal desde donde se crea la cuenta.
+     * @param account_id_null : parámetro nulo, porque Id_cuenta de ahorros
+     *                        lo crea en mismo sistemas de manera aleatoria.
+     * @return  Objeto de tipo Account
+     * @throws DuplicateKeyException: Lanza la excepción cuando la llave account_id ya está en el sistema.
+     * @throws KeyDoesNotExistException: Lanza la excepción cuando la llave client_id no existe.
      */
     @Override
-    public Account createNewAccount(
-            String client_id,
-            String sucursal_id,
-            String account_id_null)
-            throws DuplicateKeyException,
-            KeyDoesNotExistException {
+    public Account createNewAccount(String client_id, String sucursal_id, String account_id_null) throws DuplicateKeyException, KeyDoesNotExistException {
 
         // (1) Verifica que el cliente si exista.
         IClientRepository clientRepository = new NaturalClientJSON();
@@ -44,6 +41,7 @@ public class SavingAccountJSON extends AccountJSON  {
         }
 
         // (2) Verifica que esa account_id no exista.
+        HashMap<String, LinkedTreeMap<String,Object>> accounts= new HashMap<>();
         String account_id = UUID.randomUUID().toString();
         if(accounts.containsKey( account_id )){     //Si ingresa es porque el id ya existe
             throw new DuplicateKeyException(account_id);
@@ -61,9 +59,19 @@ public class SavingAccountJSON extends AccountJSON  {
         return account;
     }
 
+    /**
+     * Implementación de método que activa o cambia el estado de una cuenta de ahorros.
+     * Método extendido de AccountJson.
+     *
+     * @param account_id : Llave de la cuenta al que se le cambiará el estado.
+     * @param is_active : Nuevo estado de la cuenta.
+     * @return  : Retorna True si fué posible actualizar el estado de la cuenta.
+     * @throws KeyDoesNotExistException: Lanza la excepción cuando la llave (id_account) de la cuenta
+     *                                      no es encontrada.
+     */
+    @Override
     public boolean activeAccount(String account_id, Boolean is_active) throws KeyDoesNotExistException {
-        SavingAccount account = new SavingAccount();
-        if(is_active ){     //Si ingresa es porque la cuenta existe
+        if(is_active){     //Si ingresa es porque la cuenta existe
             return updateStatus(account_id, fileName);
         }
         return true;

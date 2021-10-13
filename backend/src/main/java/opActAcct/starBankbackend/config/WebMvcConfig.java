@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Configuración del Backend para que tenga correcto funcionamiento con el Frontend
+ */
 @Configuration
 public class WebMvcConfig {
 

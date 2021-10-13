@@ -1,14 +1,27 @@
-<<<<<<< HEAD
 {
     "35559562-1": {
-        "isActive": false,
-        "client_id": "123274",
-        "balance": 0.0,
-        "sucursal_id": "1",
-        "transactions": [],
-        "creation_date": "Wed Sep 29 22:14:19 COT 2021"
+        "accounts": [
+            "d935ca7a4d29ae1e",
+            "60401d1521a00cf0"
+        ],
+        "phone": "3181608631",
+        "client_name": "Joshua Powell",
+        "client_occupation": "cajero",
+        "client_address": "0096 David Meadows Suite 231 Brookeborough, CO 43491",
+        "client_id": "35559562",
+        "company_name": "Pan Diaz",
+        "cluster": "internet"
+    },
+    "96974161-9": {
+        "accounts": [
+            "5c9816048e0b5bfa"
+        ],
+        "phone": "3094263812",
+        "client_name": "Margaret Esparza",
+        "client_occupation": "musico",
+        "client_address": "02651 Alexander Crossroad Suite 651 Stevenside, SC 53445",
+        "client_id": "96974161",
+        "company_name": "Bares Chaney",
+        "cluster": "servicio al cliente"
     }
 }
-=======
-{"35559562-1":{"isActive":"true","client_id":"35559562-1","balance":0.0,"sucursal_id":"1","transactions":[],"creation_date":"Wed Sep 29 22:14:19 COT 2021"},"96974161-9":{"isActive":false,"client_id":"1038","balance":0.0,"sucursal_id":"1","transactions":[],"creation_date":"Thu Sep 30 00:05:51 COT 2021"}}
->>>>>>> cd7b3413e1539888990d12899db865bcbdf552c3

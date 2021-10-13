@@ -8,50 +8,43 @@ import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
 import java.io.*;
 import java.util.HashMap;
 
+/**
+ * IMPLEMENTACIÓN del programa con archivos .JSON
+ */
 public abstract class JsonImplementation implements  IImplementation{
 
+    /**
+     * Método que agrega la información que se tiene en objectToWrite al archivo llamado como está en la variable fileName.
+     * El método devuelve una excepción si la clave primaria del objeto que se quiere agregar ya existe en el archivo.
+     *
+     * Este método es la implementación de JSON a nuestro Programa.
+     *
+     * @param objectToWrite : Objeto que se copiará en el archivo.
+     * @param fileName : Nombre del Archivo al que se le agregará información.
+     * @throws DuplicateKeyException: Lanza la excepción cuando la clave primaria
+     * del objeto que se quiere agregar ya existe en el archivo.
+     */
     @Override
     public abstract void add(Object objectToWrite, String fileName) throws DuplicateKeyException;
-    /*{
-        // (0) Crea el archivo en caso de que no exista
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
-        }
-        catch (FileNotFoundException ex) {    //Excepción de cuando no encuentra un archivo con el nombre alojado en la variable "fileName"
-            //Se crea un archivo con el nombre alojado en la variable "fileName"
-            File file = new File(fileName);
-            try{                            //Crea el archivo sin problemas
-                file.createNewFile();
-            }catch(Exception e){            //Hay problemas para crear el archivo.
-                System.out.println("Problema, creando el archivo. Excepción: "+ e);
-            }
-        }
-        catch (IOException ex) {
-            System.out.println("Problema, mirar error IOE");
-        }
 
-    }*/
-
+    /**
+     * Método que actualiza la información de un objeto una llave ya existente.
+     *
+     * Este método es la implementación de JSON a nuestro Programa.
+     *
+     * @param objectToUpdate : Objeto actualizado.
+     * @param fileName : Nombre del Archivo al que se le agregará información.
+     * @throws KeyDoesNotExistException: Clave de objeto que no existe en el archivo.
+     */
     @Override
-    public abstract void update(Object object, String fileName) throws KeyDoesNotExistException;
-    /*{
-        // (0) Crea el archivo en caso de que no exista
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
-        }
-        catch (FileNotFoundException ex) {    //Excepción de cuando no encuentra un archivo con el nombre alojado en la variable "fileName"
-            //Se crea un archivo con el nombre alojado en la variable "fileName"
-            File file = new File(fileName);
-            try{                            //Crea el archivo sin problemas
-                file.createNewFile();
-            }catch(Exception e){            //Hay problemas para crear el archivo.
-                System.out.println("Problema, creando el archivo. Excepción: "+ e);
-            }
-        }
-        catch (IOException ex) {
-            System.out.println("Problema, mirar error IOE");
-        }
+    public abstract void update(Object objectToUpdate, String fileName) throws KeyDoesNotExistException;
 
-    }*/
-
+    /**
+     * Implementación de método para leer información del archivo.
+     *
+     * @param fileName : Nombre del archivo que se lee´ra
+     * @return Object tipo Map: Diccionario con objetos encontrados en el archivo JSON.
+     */
     @Override
     public Object read(String fileName) {
 

@@ -13,37 +13,24 @@ import opActAcct.starBankbackend.repository.exception.KeyDoesNotExistException;
 
 public class NaturalClientJSON extends ClientJSON {
 
+    //Nombre del archivo tipo JSON donde estarán los clientes tipo Empresa.
     private static final String fileName = "natural_clients.json";
-
-
+    //Mapa con los clientes que se lean cada vez del archivo JSON.
     private static HashMap<String, LinkedTreeMap<String,Object>> clients= new HashMap<>();
 
-    @Override
-    public void associateAccountToClient(String account_id, String client_id) throws  KeyDoesNotExistException {
-        //Busca a cliente y lo extrae con sus datos
 
-        clients =(HashMap) findClient(client_id, fileName);
-
-        LinkedTreeMap clientMap = clients.get(client_id);
-
-        //Actualiza la lista de cuentas que tiene asociada
-        ArrayList clientAccounts = (ArrayList) clientMap.get("accounts");
-        clientAccounts.add(account_id);
-
-        //Crea el nuevo cliente.
-        Client client = new NaturalClient(
-                client_id,
-                clientAccounts,
-                (String) clientMap.get("phone"),
-                (String) clientMap.get("client_name"),
-                (String) clientMap.get("client_occupation"),
-                (String) clientMap.get("client_address"));
-
-        //Actualiza el cliente en el JSON
-        this.update(client, fileName);
-
-    }
-
+    /**
+     * Implementación de método que agrega la información que se tiene en objectToWrite al archivo llamado como está en la variable fileName.
+     * El método devuelve una excepción si la clave primaria del objeto que se quiere agregar ya existe en el archivo.
+     *
+     * Este método se extiende de la interfaz JsonImplmentation, y también
+     * se extiende de la clase abstracta ClientJSON
+     *
+     * @param objectToWrite : Objeto que se copiará en el archivo.
+     * @param fileName : Nombre del Archivo al que se le agregará información.
+     * @throws DuplicateKeyException: Lanza la excepción cuando la clave primaria
+     * del objeto que se quiere agregar ya existe en el archivo.
+     */
     @Override
     public void add(Object objectToWrite, String fileName) throws DuplicateKeyException {
         // (0) Crea el archivo en caso de que no exista
@@ -96,11 +83,21 @@ public class NaturalClientJSON extends ClientJSON {
         }
     }
 
+    /**
+     * Implementación de método que actualiza la información de un objeto una llave ya existente.
+     *
+     * Este método se extiende de la interfaz JsonImplementation, y también
+     * se extiende de la clase abstracta ClientJSON
+     *
+     * @param objectToUpdate : Objeto actualizado.
+     * @param fileName : Nombre del Archivo al que se le agregará información.
+     * @throws KeyDoesNotExistException: Clave de objeto que no existe en el archivo.
+     */
     @Override
-    public void update(Object clientObject, String fileName) throws KeyDoesNotExistException {
+    public void update(Object objectToUpdate, String fileName) throws KeyDoesNotExistException {
 
         // (1) Se comprueba que EXISTA el ID.
-        NaturalClient naturalClient = (NaturalClient) clientObject;
+        NaturalClient naturalClient = (NaturalClient) objectToUpdate;
         clients =(HashMap) findClient(naturalClient.getClient_id(), fileName);
 
         String stringToWrite ="";
@@ -128,6 +125,41 @@ public class NaturalClientJSON extends ClientJSON {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+
+    }
+
+    /**
+     * Implementación de método que agrega una cuenta (account_id) a un usuario (client_id)
+     *
+     * Este método hereda de la interfaz IClientRepository
+     *
+     * @param account_id : Llave de la cuenta (account_id o nit) que se alojará en la lista de arreglo de cuentas del usuario.
+     * @param client_id : Llave del cliente al que se le va a agregar un Account_id
+     * @throws KeyDoesNotExistException: Cuando el cliente no existe, lanza esta excepción.
+     */
+    @Override
+    public void associateAccountToClient(String account_id, String client_id) throws  KeyDoesNotExistException {
+        //Busca a cliente y lo extrae con sus datos
+
+        clients =(HashMap) findClient(client_id, fileName);
+
+        LinkedTreeMap clientMap = clients.get(client_id);
+
+        //Actualiza la lista de cuentas que tiene asociada
+        ArrayList clientAccounts = (ArrayList) clientMap.get("accounts");
+        clientAccounts.add(account_id);
+
+        //Crea el nuevo cliente.
+        Client client = new NaturalClient(
+                client_id,
+                clientAccounts,
+                (String) clientMap.get("phone"),
+                (String) clientMap.get("client_name"),
+                (String) clientMap.get("client_occupation"),
+                (String) clientMap.get("client_address"));
+
+        //Actualiza el cliente en el JSON
+        this.update(client, fileName);
 
     }
 

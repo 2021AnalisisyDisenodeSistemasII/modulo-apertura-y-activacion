@@ -15,6 +15,19 @@ public abstract class AccountJSON extends JsonImplementation implements IAccount
 
     private static HashMap<String, LinkedTreeMap<String,Object>> accounts= new HashMap<>();
 
+    /**
+     * Implementación del método que agrega la información que se tiene
+     * en objectToWrite al archivo llamado como está en la variable fileName.
+     * El método devuelve una excepción si la clave primaria del objeto que
+     * se quiere agregar ya existe en el archivo.
+     *
+     * Este método se extiende de la interfaz JsonImplementation
+     *
+     * @param objectToWrite : Objeto que se copiará en el archivo.
+     * @param fileName : Nombre del Archivo al que se le agregará información.
+     * @throws DuplicateKeyException: Lanza la excepción cuando la clave primaria
+     * del objeto que se quiere agregar ya existe en el archivo.
+     */
     @Override
     public void add(Object objectToWrite, String fileName) throws DuplicateKeyException {
 
@@ -67,6 +80,15 @@ public abstract class AccountJSON extends JsonImplementation implements IAccount
         }
     }
 
+    /**
+     * Implementación de método que actualiza la información de un objeto una llave ya existente.
+     *
+     * Este método se extiende de la interfaz JsonImplementation
+     *
+     * @param objectToWrite : Objeto actualizado.
+     * @param fileName : Nombre del Archivo al que se le agregará información.
+     * @throws KeyDoesNotExistException: Clave de objeto que no existe en el archivo.
+     */
     @Override
     public void update(Object objectToWrite, String fileName) throws KeyDoesNotExistException {
 
@@ -120,6 +142,15 @@ public abstract class AccountJSON extends JsonImplementation implements IAccount
         }
     }
 
+    /**
+     * Implementación de método que actualiza el estado de una cuenta.
+     * No importa el tipo de cuenta.
+     *
+     * @param account_id : Llave o id de la cuenta que se le quiere cambiar el estado.
+     * @param fileName : Nombre del archivo donde se debe actualizar los datos.
+     * @return True en caso de que el cambio haya sido exitoso.
+     * @throws KeyDoesNotExistException: Cuando la llave de la cuenta no existe en el archivo.
+     */
     @Override
     public boolean updateStatus (String account_id, String fileName) throws KeyDoesNotExistException{
         accounts= (HashMap) read(fileName);
@@ -142,17 +173,37 @@ public abstract class AccountJSON extends JsonImplementation implements IAccount
         return false;
     }
 
+    /**
+     * Método abstracto que crea una nueva cuenta.
+     * Método heredado de IAccountRepository e implementado en cada uno de los tipos de cuentas.
+     *
+     * @param client_id : id del cliente al que se le creará la nueva cuenta
+     * @param sucursal_id : Sucursal desde donde se crea la cuenta.
+     * @param account_id : De acuerdo al tipo de cuenta, este argumento es válido o nulo.
+     * @return  Objeto de tipo Account
+     * @throws DuplicateKeyException: Lanza la excepción cuando la llave account_id ya está en el sistema.
+     * @throws KeyDoesNotExistException: Lanza la excepción cuando la llave client_id no existe.
+     */
     @Override
-    public abstract Account  createNewAccount(
+    public abstract Account createNewAccount(
             String client_id,
             String sucursal_id,
             String account_id)
             throws DuplicateKeyException,
             KeyDoesNotExistException;
 
-
+    /**
+     * Método abstracto que activa o cambia el estado de una cuenta.
+     * Método heredado de IAccountRepository e implementado en cada uno de los tipos de cuentas.
+     *
+     * @param account_id : Llave de la cuenta al que se le cambiará el estado.
+     * @param is_active : Nuevo estado de la cuenta.
+     * @return  : Retorna True si fué posible actualizar el estado de la cuenta.
+     * @throws KeyDoesNotExistException: Lanza la excepción cuando la llave (id_account) de la cuenta
+     *                                      no es encontrada.
+     */
     public abstract boolean activeAccount(
-            String client_id,
+            String account_id,
             Boolean is_active)
             throws KeyDoesNotExistException;
 

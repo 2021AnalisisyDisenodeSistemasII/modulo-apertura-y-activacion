@@ -2,8 +2,13 @@ package opActAcct.starBankbackend.model;
 
 import java.util.ArrayList;
 
+/**
+ * Objeto tipo cuenta
+ * Extendiendo esta clase se pueden crear los tipos de cuenta que se quieran
+ */
 public abstract class Account {
 
+    //Parámetros que tendrán las cuentas
     protected String account_id;
     protected String client_id;
     protected String sucursal_id;
@@ -12,6 +17,7 @@ public abstract class Account {
     protected ArrayList transactions;
     protected String creation_date;
 
+    //Constructores
     public Account(String account_id,
                    String client_id,
                    String sucursal_id,
@@ -37,6 +43,8 @@ public abstract class Account {
         this.balance = balance;
         this.status = status;
     }
+
+    //Getters y setters
 
     public String getAccount_id() {
         return account_id;

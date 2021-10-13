@@ -2,6 +2,9 @@ package opActAcct.starBankbackend.model;
 
 import java.util.ArrayList;
 
+/**
+ * Tipo de cuenta: Cuenta Corriente.
+ */
 public class CurrentAccount extends Account{
 
     public CurrentAccount(String account_id, String client_id, String sucursal_id, boolean status, Float balance, ArrayList transactions, String creation_date) {

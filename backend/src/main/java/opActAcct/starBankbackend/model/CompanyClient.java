@@ -1,8 +1,10 @@
 package opActAcct.starBankbackend.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * Tipo de cliente: Cliente empresa.
+ */
 public class CompanyClient extends Client{
 
     private String company_name;

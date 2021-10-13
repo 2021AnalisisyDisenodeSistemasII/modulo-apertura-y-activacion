@@ -3,8 +3,13 @@ package opActAcct.starBankbackend.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Objeto tipo cliente
+ * Extendiendo esta clase se pueden crear los tipos de clientes que se quieran
+ */
 public abstract class Client {
 
+    //Parámetros del cliente
     protected String client_id;
     protected ArrayList accounts;
     protected String phone;
@@ -12,6 +17,7 @@ public abstract class Client {
     protected String client_occupation;
     protected String client_address;
 
+    //Constructores de cliente
     public Client(String client_id, ArrayList accounts, String phone, String client_name, String client_occupation, String client_address) {
         this.accounts = accounts;
         this.phone = phone;
@@ -21,6 +27,7 @@ public abstract class Client {
         this.client_id = client_id;
     }
 
+    //Getters y setters
 
     public String getClient_id() {
         return client_id;
