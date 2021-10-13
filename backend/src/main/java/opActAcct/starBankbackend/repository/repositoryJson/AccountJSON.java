@@ -179,7 +179,7 @@ public abstract class AccountJSON extends JsonImplementation implements IAccount
      *
      * @param client_id : id del cliente al que se le creará la nueva cuenta
      * @param sucursal_id : Sucursal desde donde se crea la cuenta.
-     * @param account_id : De acuerdo al tipo de cuenta, este argumento es válido o nulo.
+     * @param nit : De acuerdo al tipo de cuenta, este argumento es válido o nulo.
      * @return  Objeto de tipo Account
      * @throws DuplicateKeyException: Lanza la excepción cuando la llave account_id ya está en el sistema.
      * @throws KeyDoesNotExistException: Lanza la excepción cuando la llave client_id no existe.
@@ -188,7 +188,7 @@ public abstract class AccountJSON extends JsonImplementation implements IAccount
     public abstract Account createNewAccount(
             String client_id,
             String sucursal_id,
-            String account_id)
+            String nit)
             throws DuplicateKeyException,
             KeyDoesNotExistException;
 

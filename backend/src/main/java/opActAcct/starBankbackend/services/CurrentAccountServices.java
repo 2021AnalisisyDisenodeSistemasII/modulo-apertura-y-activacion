@@ -32,18 +32,18 @@ public class CurrentAccountServices {
      * Servicio o método que crea una nueva cuenta.
      * @param client_id :
      * @param sucursal_id :
-     * @param account_id :
+     * @param nit :
      * @return Objeto creado
-     * @throws ObjectAlreadyExistsException: La cuenta con account_id ya existe en el sistema.
+     * @throws ObjectAlreadyExistsException: La cuenta con nit ya existe en el sistema.
      * @throws ObjectDoesNotExistException: El cliente_id no existe en el sistema.
      */
-    public CurrentAccount createANewAccount(String client_id, String sucursal_id, String account_id) throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
+    public CurrentAccount createANewAccount(String client_id, String sucursal_id, String nit) throws ObjectAlreadyExistsException, ObjectDoesNotExistException {
         try{
-            return (CurrentAccount) accountRepository.createNewAccount(client_id, sucursal_id, account_id);
+            return (CurrentAccount) accountRepository.createNewAccount(client_id, sucursal_id, nit);
         }
         catch (KeyDoesNotExistException kne){
             System.out.println(kne);
-            throw new ObjectDoesNotExistException(String.format("El nit "+ account_id+ " no existe" ));
+            throw new ObjectDoesNotExistException(String.format("El nit "+ nit+ " no existe" ));
         }
         catch(DuplicateKeyException dke){
             System.out.println(dke);

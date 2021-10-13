@@ -23,14 +23,14 @@ public class SavingAccountJSON extends AccountJSON  {
      *
      * @param client_id : id del cliente al que se le creará la nueva cuenta
      * @param sucursal_id : Sucursal desde donde se crea la cuenta.
-     * @param account_id_null : parámetro nulo, porque Id_cuenta de ahorros
+     * @param nit : parámetro nulo, porque Id_cuenta de ahorros
      *                        lo crea en mismo sistemas de manera aleatoria.
      * @return  Objeto de tipo Account
      * @throws DuplicateKeyException: Lanza la excepción cuando la llave account_id ya está en el sistema.
      * @throws KeyDoesNotExistException: Lanza la excepción cuando la llave client_id no existe.
      */
     @Override
-    public Account createNewAccount(String client_id, String sucursal_id, String account_id_null) throws DuplicateKeyException, KeyDoesNotExistException {
+    public Account createNewAccount(String client_id, String sucursal_id, String nit) throws DuplicateKeyException, KeyDoesNotExistException {
 
         // (1) Verifica que el cliente si exista.
         IClientRepository clientRepository = new NaturalClientJSON();

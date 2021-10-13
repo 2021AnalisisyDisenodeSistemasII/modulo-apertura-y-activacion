@@ -33,26 +33,27 @@ public class CurrentAccountJSON extends AccountJSON {
      *
      * @param client_id : id del cliente al que se le creará la nueva cuenta
      * @param sucursal_id : Sucursal desde donde se crea la cuenta.
-     * @param account_id : ID_cuenta o nit de la empresa.
+     * @param nit : ID_cuenta o nit de la empresa.
      * @return  Objeto de tipo Account
      * @throws DuplicateKeyException: Lanza la excepción cuando la llave account_id ya está en el sistema.
      * @throws KeyDoesNotExistException: Lanza la excepción cuando la llave client_id no existe.
      */
     @Override
-    public CurrentAccount createNewAccount(String client_id, String sucursal_id, String account_id) throws DuplicateKeyException, KeyDoesNotExistException {
+    public CurrentAccount createNewAccount(String client_id, String sucursal_id, String nit) throws DuplicateKeyException, KeyDoesNotExistException {
         // (1) Verifica que el cliente si exista.
         IClientRepository clientRepository = new CompanyClientJSON();
-        System.out.println("este es el nit que está buscando" +account_id);
+        System.out.println("este es el nit que está buscando" + nit);
         try{
-            clientRepository.findClient(account_id, "company_clients.json");
+            clientRepository.findClient(client_id, "company_clients.json");
         }catch (KeyDoesNotExistException kne){
-            throw new KeyDoesNotExistException(account_id);
+            throw new KeyDoesNotExistException(client_id);
         }
 
-        // (2) Verifica que esa account_id (NIT) no exista.
+        // (2) Verifica que esa account_id no exista.
+        String account_id = UUID.randomUUID().toString();
         HashMap<String, LinkedTreeMap<String,Object>> accounts= new HashMap<>();
-        if(accounts.containsKey( account_id )){     //Si ingresa es porque el id ya existe
-            throw new DuplicateKeyException(account_id);
+        if(accounts.containsKey(account_id)){     //Si ingresa es porque el id ya existe
+            throw new DuplicateKeyException(nit);
         }
         Date fecha = new Date();
 
